@@ -262,3 +262,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .container-application {
+    @apply container mx-auto;
+  }
+}
