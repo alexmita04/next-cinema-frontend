@@ -1,12 +1,16 @@
 import { Outlet } from "react-router";
 import Navbar from "@/components/partials/Navbar";
+import Footer from "@/components/partials/Footer";
 
 const MainLayout = () => {
   return (
     <>
-      <div className="font-inter">
+      <div className="font-inter min-h-screen flex flex-col">
         <Navbar />
-        <Outlet />
+        <main className="flex-grow">
+          <Outlet />
+        </main>
+        <Footer />
       </div>
     </>
   );
