@@ -5,19 +5,23 @@ import "./index.css";
 import MainLayout from "@/components/layout/MainLayout";
 import LandingPage from "@/components/pages/LandingPage";
 import ComponentsShowcase from "@/components/pages/ComponentsShowcase";
+import NotFound from "@/components/pages/NotFound";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
+          {/* Landing Page */}
           <Route index element={<LandingPage />}></Route>
 
+          {/* Components Page */}
           <Route
             path="components-showcase"
             element={<ComponentsShowcase />}
           ></Route>
 
+          {/* Cinema Routes */}
           <Route path="cinemas">
             <Route index element={"cinemas-page"}></Route>
             <Route path=":cinemaId">
@@ -29,14 +33,19 @@ createRoot(document.getElementById("root")!).render(
             </Route>
           </Route>
 
+          {/* Login Page */}
           <Route path="login" element={"login"}></Route>
 
+          {/* Singup Page */}
           <Route path="signup" element={"signup"}></Route>
 
+          {/* Profile Page */}
           <Route path="profile" element={"user-profile"}></Route>
 
+          {/* Stripe Page */}
           <Route path="stripe-checkout" element={"stripe-page"}></Route>
 
+          {/* Dashboard Route */}
           <Route path="dashboard">
             <Route index element={"adin-dashboard"}></Route>
             <Route path="screenings">
@@ -52,7 +61,8 @@ createRoot(document.getElementById("root")!).render(
             </Route>
           </Route>
 
-          <Route path="*" element={"Not Found"} />
+          {/* 404 Page */}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
