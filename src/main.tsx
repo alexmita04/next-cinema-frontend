@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import "./index.css";
 import MainLayout from "@/components/layout/MainLayout";
 import LandingPage from "@/components/pages/LandingPage";
+import ComponentsShowcase from "@/components/pages/ComponentsShowcase";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -11,6 +12,11 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<LandingPage />}></Route>
+
+          <Route
+            path="components-showcase"
+            element={<ComponentsShowcase />}
+          ></Route>
 
           <Route path="cinemas">
             <Route index element={"cinemas-page"}></Route>
