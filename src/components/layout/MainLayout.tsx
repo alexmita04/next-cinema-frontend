@@ -7,7 +7,7 @@ const MainLayout = () => {
     <>
       <div className="font-inter min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow container-application">
           <Outlet />
         </main>
         <Footer />
