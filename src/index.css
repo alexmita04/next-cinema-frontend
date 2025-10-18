@@ -261,10 +261,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 @layer components {
   .container-application {
-    @apply container mx-auto;
+    @apply container mx-auto px-5;
   }
 }

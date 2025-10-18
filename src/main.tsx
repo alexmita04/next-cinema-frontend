@@ -1,11 +1,12 @@
+import "./index.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
-import "./index.css";
 import MainLayout from "@/components/layout/MainLayout";
 import LandingPage from "@/components/pages/LandingPage";
 import ComponentsShowcase from "@/components/pages/ComponentsShowcase";
 import NotFound from "@/components/pages/NotFound";
+import Login from "@/components/pages/Login";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -34,7 +35,7 @@ createRoot(document.getElementById("root")!).render(
           </Route>
 
           {/* Login Page */}
-          <Route path="login" element={"login"}></Route>
+          <Route path="login" element={<Login />}></Route>
 
           {/* Singup Page */}
           <Route path="signup" element={"signup"}></Route>
