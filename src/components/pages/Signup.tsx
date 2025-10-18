@@ -31,6 +31,12 @@ const Signup = () => {
                 </SelectItem>
               </SelectContent>
             </Select>
+            <p className="mb-5 text-sm">
+              Already having an account?{" "}
+              <a className="text-red-500" href="#">
+                Login
+              </a>
+            </p>
             <Button variant="default" size="lg">
               Sign up
             </Button>

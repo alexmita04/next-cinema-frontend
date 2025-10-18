@@ -10,6 +10,12 @@ const Login = () => {
           <div className="max-w-[450px]">
             <Input type="text" placeholder="username" className="mb-5" />
             <Input type="password" placeholder="password" className="mb-5" />
+            <p className="mb-5 text-sm">
+              Not having an account?{" "}
+              <a className="text-red-500" href="#">
+                Sign up
+              </a>
+            </p>
             <Button variant="default" size="lg">
               Login
             </Button>
