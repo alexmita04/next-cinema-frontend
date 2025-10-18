@@ -7,6 +7,7 @@ import LandingPage from "@/components/pages/LandingPage";
 import ComponentsShowcase from "@/components/pages/ComponentsShowcase";
 import NotFound from "@/components/pages/NotFound";
 import Login from "@/components/pages/Login";
+import Signup from "@/components/pages/Signup";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -38,7 +39,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="login" element={<Login />}></Route>
 
           {/* Singup Page */}
-          <Route path="signup" element={"signup"}></Route>
+          <Route path="signup" element={<Signup />}></Route>
 
           {/* Profile Page */}
           <Route path="profile" element={"user-profile"}></Route>

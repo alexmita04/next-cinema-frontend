@@ -7,7 +7,7 @@ const Login = () => {
       <div className="flex flex-col items-center mt-15">
         <div className="flex flex-col gap-10">
           <h1 className="text-6xl font-medium">Login</h1>
-          <div>
+          <div className="max-w-[450px]">
             <Input type="text" placeholder="username" className="mb-5" />
             <Input type="password" placeholder="password" className="mb-5" />
             <Button variant="default" size="lg">
