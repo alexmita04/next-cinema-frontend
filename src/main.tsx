@@ -10,6 +10,7 @@ import Login from "@/components/pages/Login";
 import Signup from "@/components/pages/Signup";
 import CinemasPage from "@/components/pages/CinemasPage";
 import SpecificCinema from "@/components/pages/SpecificCinema";
+import SpecificScreening from "@/components/pages/SpecificScreening";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -32,7 +33,7 @@ createRoot(document.getElementById("root")!).render(
               <Route index element={<SpecificCinema />}></Route>
               <Route
                 path="screenings/:screeningId"
-                element={"specific-screening-page"}
+                element={<SpecificScreening />}
               ></Route>
             </Route>
           </Route>
