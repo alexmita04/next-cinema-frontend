@@ -1,0 +1,47 @@
+{
+  "_id": "68ef7d1a5c123b456e7f8d90",
+  "auditoriums": ["Auditorium 1", "Auditorium 2", "Auditorium 3"],
+  "movie": {
+    "_id": "68ecf08c52e10981ea3f2cc3",
+    "title": "Saving Private Ryan",
+    "description": "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action.",
+    "slug": "saving-private-ryan",
+    "duration": 169,
+    "releaseDate": "1998-07-24T00:00:00.000Z",
+    "genres": ["Drama", "Action"],
+    "cast": [
+      {
+        "name": "Tom Hanks",
+        "characterName": "Captain John Miller",
+        "_id": "68ecf08c52e10981ea3f2cc4"
+      },
+      {
+        "name": "Matt Damon",
+        "characterName": "Private James Ryan",
+        "_id": "68ecf08c52e10981ea3f2cc5"
+      },
+      {
+        "name": "Tom Sizemore",
+        "characterName": "Sergeant Horvath",
+        "_id": "68ecf08c52e10981ea3f2cc6"
+      }
+    ],
+    "director": "Steven Spielberg",
+    "production": "DreamWorks Pictures",
+    "distribution": "Paramount Pictures",
+    "coverImage": "https://resizing.flixster.com/w3n4-6BPPmegOYfBinbTgvms7Uk=/206x305/v2/https://resizing.flixster.com/e4XDrbw7Fd7VYePV7cxB8sQV3eA=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzc1MDczNGJlLWNjN2EtNGIxMS1iOWM5LWJjYTUwODk4MzA5Yy53ZWJw",
+    "trailer": "https://youtu.be/S1Qj_AVu2pA",
+    "__v": 0,
+    "createdAt": "2025-10-13T12:29:00.323Z",
+    "updatedAt": "2025-10-13T12:29:00.323Z"
+  },
+  "cinema": "68ef7d1a5c123b456e7f8d93",
+  "date": "2025-10-25T00:00:00.000+00:00",
+  "startTime": 15,
+  "pricing": 25,
+  "language": "Română (RO)",
+  "subtitle": "Engleză (EN)",
+  "createdAt": "2025-10-20T10:30:00.000+00:00",
+  "updatedAt": "2025-10-20T10:30:00.000+00:00",
+  "__v": 0
+}
