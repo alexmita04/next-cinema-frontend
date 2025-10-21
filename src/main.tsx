@@ -11,6 +11,7 @@ import Signup from "@/components/pages/Signup";
 import CinemasPage from "@/components/pages/CinemasPage";
 import SpecificCinema from "@/components/pages/SpecificCinema";
 import SpecificScreening from "@/components/pages/SpecificScreening";
+import UserProfile from "@/components/pages/UserProfile";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -45,7 +46,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="signup" element={<Signup />}></Route>
 
           {/* Profile Page */}
-          <Route path="profile" element={"user-profile"}></Route>
+          <Route path="profile" element={<UserProfile />}></Route>
 
           {/* Stripe Page */}
           <Route path="stripe-checkout" element={"stripe-page"}></Route>

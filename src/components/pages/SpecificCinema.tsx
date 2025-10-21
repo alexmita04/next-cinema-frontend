@@ -7,7 +7,6 @@ import screening from "@/components/items/screening.json";
 const screenings = Array(9).fill(screening);
 
 const SpecificCinema = () => {
-  console.log(screening);
   return (
     <>
       <div className="mt-15">

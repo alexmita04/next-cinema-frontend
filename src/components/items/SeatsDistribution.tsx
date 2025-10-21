@@ -7,8 +7,6 @@ const seats = Array.from({ length: ROWS }, () => {
 });
 
 const SeatsDistribution = () => {
-  console.log(seats);
-
   return (
     <>
       <div className="flex flex-col items-center">
