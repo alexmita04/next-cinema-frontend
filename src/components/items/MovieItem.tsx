@@ -1,13 +1,9 @@
 interface MovieItemProps {
   title: string;
-  duration: number;
-  genres: string[];
   coverImage: string;
 }
 
-const MovieItem = ({ title, duration, genres, coverImage }: MovieItemProps) => {
-  console.log(title, duration, genres, coverImage);
-
+const MovieItem = ({ title, coverImage }: MovieItemProps) => {
   return (
     <div className="border-4 border-red-500 rounded-lg relative w-full h-96 overflow-hidden cursor-pointer group">
       <img

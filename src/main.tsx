@@ -12,6 +12,7 @@ import CinemasPage from "@/components/pages/CinemasPage";
 import SpecificCinema from "@/components/pages/SpecificCinema";
 import SpecificScreening from "@/components/pages/SpecificScreening";
 import UserProfile from "@/components/pages/UserProfile";
+import AdminDashboard from "@/components/pages/AdminDashboard";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -53,7 +54,7 @@ createRoot(document.getElementById("root")!).render(
 
           {/* Dashboard Route */}
           <Route path="dashboard">
-            <Route index element={"adin-dashboard"}></Route>
+            <Route index element={<AdminDashboard />}></Route>
             <Route path="screenings">
               <Route path="add-screening" element={"add-screening"}></Route>
               <Route

@@ -33,8 +33,6 @@ const CinemasPage = () => {
                 <MovieItem
                   key={movieEl._id}
                   title={movieEl.title}
-                  duration={movieEl.duration}
-                  genres={movieEl.genres}
                   coverImage={movieEl.coverImage}
                 />
               );
