@@ -33,13 +33,13 @@ const auditoriums = [
   },
 ];
 
-const AddScreening = () => {
+const EditScreening = () => {
   return (
     <>
       <div className="flex justify-center w-full">
-        <div className="max-w-[450px] w-full flex flex-col gap-5 mt-15">
-          <h1 className="text-4xl font-medium">Add Screening</h1>
-          <div className="flex flex-col gap-5 ">
+        <div className="max-w-[450px] flex flex-col gap-5 mt-15">
+          <h1 className="text-4xl font-medium">Edit Screening</h1>
+          <div className="flex flex-col gap-5">
             <SearchSelectInput dataArr={movies} placeholder="Select Movie..." />
             <SearchSelectInput
               dataArr={auditoriums}
@@ -52,16 +52,10 @@ const AddScreening = () => {
               max="24"
               placeholder="Start Time (hour)"
             />
-            <Input
-              type="number"
-              min="0"
-              max="100"
-              placeholder="Price per Ticket"
-            />
             <Input type="text" placeholder="Language" />
             <Input type="text" placeholder="Subtitle Language" />
             <div>
-              <Button size="lg">Add Screening</Button>
+              <Button size="lg">Edit Screening</Button>
             </div>
           </div>
         </div>
@@ -70,4 +64,4 @@ const AddScreening = () => {
   );
 };
 
-export default AddScreening;
+export default EditScreening;

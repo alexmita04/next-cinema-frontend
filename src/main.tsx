@@ -14,6 +14,7 @@ import SpecificScreening from "@/components/pages/SpecificScreening";
 import UserProfile from "@/components/pages/UserProfile";
 import AdminDashboard from "@/components/pages/AdminDashboard";
 import AddScreening from "@/components/pages/AddScreening";
+import EditScreening from "@/components/pages/EditScreening";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -60,7 +61,7 @@ createRoot(document.getElementById("root")!).render(
               <Route path="add-screening" element={<AddScreening />}></Route>
               <Route
                 path="edit-screening/:screeningId"
-                element={"edit-screening"}
+                element={<EditScreening />}
               ></Route>
             </Route>
           </Route>
