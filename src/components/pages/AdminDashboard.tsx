@@ -6,6 +6,7 @@ import movies from "@/components/items/moviesData.json";
 import screening from "@/components/items/screening.json";
 import MovieItem from "@/components/items/MovieItem";
 import AdminScreeningCard from "@/components/items/AdminScreeningCard";
+import { Button } from "@/components/ui/button";
 
 function formatDate(dateObj: Date): string {
   const year = dateObj.getFullYear();
@@ -230,6 +231,9 @@ const AdminDashboard = () => {
             );
           })}
         </div>
+        <Button size="lg" className="mt-5 mb-5 text-xl px-10 py-7">
+          Add Screening
+        </Button>
       </div>
       <div>
         <h2 className="text-5xl font-bold mb-5">Movies</h2>

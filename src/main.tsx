@@ -13,6 +13,7 @@ import SpecificCinema from "@/components/pages/SpecificCinema";
 import SpecificScreening from "@/components/pages/SpecificScreening";
 import UserProfile from "@/components/pages/UserProfile";
 import AdminDashboard from "@/components/pages/AdminDashboard";
+import AddScreening from "@/components/pages/AddScreening";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -56,15 +57,11 @@ createRoot(document.getElementById("root")!).render(
           <Route path="dashboard">
             <Route index element={<AdminDashboard />}></Route>
             <Route path="screenings">
-              <Route path="add-screening" element={"add-screening"}></Route>
+              <Route path="add-screening" element={<AddScreening />}></Route>
               <Route
                 path="edit-screening/:screeningId"
                 element={"edit-screening"}
               ></Route>
-            </Route>
-            <Route path="movies">
-              <Route path="add-movie" element={"add-movie"}></Route>
-              <Route path="edit-movie/:movieId" element={"edit-movie"}></Route>
             </Route>
           </Route>
 
