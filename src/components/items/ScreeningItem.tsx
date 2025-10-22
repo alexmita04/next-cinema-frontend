@@ -36,13 +36,17 @@ const ScreeningItem = ({ screening }: { screening: ScreeningItemProps }) => {
   return (
     <>
       <div className="relative flex gap-5 border-2 border-black rounded-lg">
-        <img src={screening.movie.coverImage} alt="" />
-        <div className="py-5 flex flex-col gap-5">
-          <h3 className="text-2xl font-medium">{screening.movie.title}</h3>
+        <img
+          src={screening.movie.coverImage}
+          alt=""
+          className="hidden sm:block"
+        />
+        <div className="pl-5 sm:pl-0 py-5 flex flex-col gap-5">
+          <h3 className="text-2xl font-bold">{screening.movie.title}</h3>
           <div className="flex flex-wrap gap-x-5 gap-y-3">
             {hours.map((hourEl) => {
               return (
-                <Button key={hourEl} size="lg" variant="outline">
+                <Button key={hourEl} size="sm" variant="outline">
                   {hourEl}
                 </Button>
               );

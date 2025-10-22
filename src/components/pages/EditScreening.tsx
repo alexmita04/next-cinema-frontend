@@ -37,7 +37,7 @@ const EditScreening = () => {
   return (
     <>
       <div className="flex justify-center w-full">
-        <div className="max-w-[450px] flex flex-col gap-5 mt-15">
+        <div className="max-w-[450px] w-full flex flex-col gap-5 mt-15">
           <h1 className="text-4xl font-medium">Edit Screening</h1>
           <div className="flex flex-col gap-5">
             <SearchSelectInput dataArr={movies} placeholder="Select Movie..." />
