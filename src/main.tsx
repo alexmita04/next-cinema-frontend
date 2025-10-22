@@ -15,61 +15,66 @@ import UserProfile from "@/components/pages/UserProfile";
 import AdminDashboard from "@/components/pages/AdminDashboard";
 import AddScreening from "@/components/pages/AddScreening";
 import EditScreening from "@/components/pages/EditScreening";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route element={<MainLayout />}>
-          {/* Landing Page */}
-          <Route index element={<LandingPage />}></Route>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route element={<MainLayout />}>
+            {/* Landing Page */}
+            <Route index element={<LandingPage />}></Route>
 
-          {/* Components Page */}
-          <Route
-            path="components-showcase"
-            element={<ComponentsShowcase />}
-          ></Route>
+            {/* Components Page */}
+            <Route
+              path="components-showcase"
+              element={<ComponentsShowcase />}
+            ></Route>
 
-          {/* Cinema Routes */}
-          <Route path="cinemas">
-            <Route index element={<CinemasPage />}></Route>
-            <Route path=":cinemaId">
-              <Route index element={<SpecificCinema />}></Route>
-              <Route
-                path="screenings/:screeningId"
-                element={<SpecificScreening />}
-              ></Route>
+            {/* Cinema Routes */}
+            <Route path="cinemas">
+              <Route index element={<CinemasPage />}></Route>
+              <Route path=":cinemaId">
+                <Route index element={<SpecificCinema />}></Route>
+                <Route
+                  path="screenings/:screeningId"
+                  element={<SpecificScreening />}
+                ></Route>
+              </Route>
             </Route>
-          </Route>
 
-          {/* Login Page */}
-          <Route path="login" element={<Login />}></Route>
+            {/* Login Page */}
+            <Route path="login" element={<Login />}></Route>
 
-          {/* Singup Page */}
-          <Route path="signup" element={<Signup />}></Route>
+            {/* Singup Page */}
+            <Route path="signup" element={<Signup />}></Route>
 
-          {/* Profile Page */}
-          <Route path="profile" element={<UserProfile />}></Route>
+            {/* Profile Page */}
+            <Route path="profile" element={<UserProfile />}></Route>
 
-          {/* Stripe Page */}
-          <Route path="stripe-checkout" element={"stripe-page"}></Route>
+            {/* Stripe Page */}
+            <Route path="stripe-checkout" element={"stripe-page"}></Route>
 
-          {/* Dashboard Route */}
-          <Route path="dashboard">
-            <Route index element={<AdminDashboard />}></Route>
-            <Route path="screenings">
-              <Route path="add-screening" element={<AddScreening />}></Route>
-              <Route
-                path="edit-screening/:screeningId"
-                element={<EditScreening />}
-              ></Route>
+            {/* Dashboard Route */}
+            <Route path="dashboard">
+              <Route index element={<AdminDashboard />}></Route>
+              <Route path="screenings">
+                <Route path="add-screening" element={<AddScreening />}></Route>
+                <Route
+                  path="edit-screening/:screeningId"
+                  element={<EditScreening />}
+                ></Route>
+              </Route>
             </Route>
-          </Route>
 
-          {/* 404 Page */}
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+            {/* 404 Page */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </QueryClientProvider>
     </BrowserRouter>
   </StrictMode>
 );
