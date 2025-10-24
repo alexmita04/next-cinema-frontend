@@ -14,7 +14,7 @@ const Signup = () => {
       <div className="flex flex-col items-center mt-15">
         <div className="flex flex-col gap-10">
           <h1 className="text-6xl font-medium">Sign up</h1>
-          <div className="max-w-[450px]">
+          <form className="max-w-[450px]">
             <Input type="text" placeholder="username" className="mb-5" />
             <Input type="password" placeholder="password" className="mb-5" />
             <Input type="text" placeholder="address" className="mb-5" />
@@ -40,7 +40,7 @@ const Signup = () => {
             <Button variant="default" size="lg">
               Sign up
             </Button>
-          </div>
+          </form>
         </div>
       </div>
     </>
