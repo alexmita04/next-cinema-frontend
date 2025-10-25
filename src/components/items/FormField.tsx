@@ -5,6 +5,7 @@ import {
   type FieldValues,
   type Path,
 } from "react-hook-form";
+import InputError from "@/components/items/InputError";
 
 interface FormFieldInterface<T extends FieldValues> {
   name: Path<T>;
@@ -25,18 +26,14 @@ const FormField = <T extends FieldValues>({
     <>
       <div className="mb-5">
         <Input
-          {...register(name)}
+          {...register(name, {
+            valueAsNumber: type === "number",
+          })}
           type={type}
           placeholder={placeholder}
           className={`mb-2 ${error ? "border-red-500" : ""}`}
         />
-        <div className="text-sm text-red-500 w-full">
-          {error && (
-            <>
-              <p>{error.message}</p>
-            </>
-          )}
-        </div>
+        <InputError fieldError={error} />
       </div>
     </>
   );

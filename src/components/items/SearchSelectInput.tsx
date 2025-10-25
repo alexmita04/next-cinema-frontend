@@ -25,11 +25,19 @@ interface dataItem {
 interface SearchSelectInputProps {
   dataArr: dataItem[];
   placeholder: string;
+  value?: string;
+  onChange?: (id: string) => void;
 }
 
-function SearchSelectInput({ dataArr, placeholder }: SearchSelectInputProps) {
+function SearchSelectInput({
+  dataArr,
+  placeholder,
+  value,
+  onChange,
+}: SearchSelectInputProps) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+
+  const displayValue = dataArr.find((item) => item.id === value)?.value;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -40,9 +48,11 @@ function SearchSelectInput({ dataArr, placeholder }: SearchSelectInputProps) {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value
-            ? dataArr.find((dataItem) => dataItem.value === value)?.value
-            : placeholder}
+          {value ? (
+            displayValue
+          ) : (
+            <span className="text-gray-500">{placeholder}</span>
+          )}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -54,17 +64,26 @@ function SearchSelectInput({ dataArr, placeholder }: SearchSelectInputProps) {
             <CommandGroup>
               {dataArr.map((dataItem) => (
                 <CommandItem
+                  className="cursor-pointer"
                   key={dataItem.id}
                   value={dataItem.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    const selectedItem = dataArr.find(
+                      (item) =>
+                        item.value.toLowerCase() === currentValue.toLowerCase()
+                    );
+
+                    if (selectedItem) {
+                      onChange?.(selectedItem.id);
+                    }
+
                     setOpen(false);
                   }}
                 >
                   <CheckIcon
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === dataItem.value ? "opacity-100" : "opacity-0"
+                      value === dataItem.id ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {dataItem.value}

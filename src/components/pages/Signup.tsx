@@ -10,6 +10,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import FormField from "@/components/items/FormField";
+import InputError from "@/components/items/InputError";
 
 const formSchema = z.object({
   username: z.string().min(1, "Username can't be empty"),
@@ -17,7 +18,6 @@ const formSchema = z.object({
   address: z.string().min(1, "Address can't be empty"),
   phoneNumber: z.string().min(1, "Phone Number can't be empty"),
   gender: z.string().min(1, "Gender can't be empty"),
-  // gender: z.enum(["Male", "Female", "Prefer not to say"]),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -109,13 +109,7 @@ const Signup = () => {
                   </Select>
                 )}
               />
-              <div className="text-sm text-red-500 w-full">
-                {errors.gender && (
-                  <>
-                    <p>{errors.gender.message}</p>
-                  </>
-                )}
-              </div>
+              <InputError fieldError={errors.gender} />
               <p className="mb-5 text-sm">
                 Already having an account?{" "}
                 <a className="text-red-500" href="#">
