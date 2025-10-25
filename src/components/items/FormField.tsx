@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   type UseFormRegister,
   type FieldError,
@@ -25,7 +26,11 @@ const FormField = <T extends FieldValues>({
   return (
     <>
       <div className="mb-5">
+        <Label htmlFor={name} className="mb-1 text-md">
+          {placeholder.charAt(0).toUpperCase() + placeholder.slice(1)}
+        </Label>
         <Input
+          id={name}
           {...register(name, {
             valueAsNumber: type === "number",
           })}

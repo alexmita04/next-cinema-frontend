@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -83,6 +84,9 @@ const Signup = () => {
               error={errors.phoneNumber}
             />
             <div className="mb-5">
+              <Label htmlFor="gender-select" className="mb-1 text-md">
+                Gender
+              </Label>
               <Controller
                 control={control}
                 name="gender"

@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import FormField from "@/components/items/FormField";
 import InputError from "@/components/items/InputError";
+import { Label } from "@/components/ui/label";
 
 const movies = [
   {
@@ -93,6 +94,9 @@ const AddScreening = () => {
           <h1 className="text-4xl font-medium">Add Screening</h1>
           <div className="flex flex-col">
             <div className="mb-5">
+              <Label htmlFor="movie" className="mb-1 text-md">
+                Movie
+              </Label>
               <Controller
                 control={control}
                 name="movieId"
@@ -108,6 +112,9 @@ const AddScreening = () => {
               <InputError fieldError={errors.movieId} />
             </div>
             <div className="mb-5">
+              <Label htmlFor="auditorium" className="mb-1 text-md">
+                Auditorium
+              </Label>
               <Controller
                 control={control}
                 name="auditoriumId"
@@ -124,6 +131,9 @@ const AddScreening = () => {
             </div>
 
             <div className="mb-5">
+              <Label htmlFor="date" className="mb-1 text-md">
+                Date
+              </Label>
               <Controller
                 control={control}
                 name="date"
