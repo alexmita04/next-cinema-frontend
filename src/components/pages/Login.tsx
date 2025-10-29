@@ -7,7 +7,7 @@ import FormField from "@/components/items/FormField";
 import { useAuth } from "@/components/auth/AuthContext";
 import AlertEl from "@/components/items/AlertEl";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 
 const formSchema = z.object({
   username: z.string().min(1, "Username can't be empty"),
@@ -84,9 +84,9 @@ const Login = () => {
             />
             <p className="mb-5 text-sm">
               Not having an account?{" "}
-              <a className="text-red-500" href="#">
+              <Link className="text-red-500" to="/signup">
                 Sign up
-              </a>
+              </Link>
             </p>
             <Button variant="default" size="lg" disabled={isSubmitting}>
               {isSubmitting || loading ? "Submitting..." : "Login"}

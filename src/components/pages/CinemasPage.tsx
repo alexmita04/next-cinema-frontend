@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import CinemaItem from "@/components/items/CinemaItem";
 import MovieItem from "@/components/items/MovieItem";
 
@@ -15,12 +17,14 @@ const CinemasPage = () => {
           <div className="grid xl:grid-cols-3 md:grid-cols-2 gap-5 mb-10">
             {cinemas.map((cinemaEl) => {
               return (
-                <CinemaItem
-                  key={cinemaEl._id}
-                  name={cinemaEl.name}
-                  location={cinemaEl.location}
-                  parking={cinemaEl.parking}
-                />
+                <Link to={`/cinemas/${cinemaEl._id}`}>
+                  <CinemaItem
+                    key={cinemaEl._id}
+                    name={cinemaEl.name}
+                    location={cinemaEl.location}
+                    parking={cinemaEl.parking}
+                  />
+                </Link>
               );
             })}
           </div>

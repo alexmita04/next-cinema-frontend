@@ -10,14 +10,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Link } from "react-router";
 
-// Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#", label: "Movies" },
-  { href: "#", label: "Profile" },
+  { href: "/cinemas", label: "Cinemas" },
+  { href: "/profile", label: "Profile" },
+  { href: "/dashboard", label: "Dashboard" },
 ];
 
 export default function Navbar() {
+  const handleLogoutClick = () => {};
+
   return (
     <header className="border-b">
       <div className="container-application flex h-16 items-center justify-between gap-4">
@@ -63,9 +66,11 @@ export default function Navbar() {
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index} className="w-full">
-                      <NavigationMenuLink href={link.href} className="py-1.5">
-                        {link.label}
-                      </NavigationMenuLink>
+                      <Link to={link.href}>
+                        <NavigationMenuLink className="py-1.5">
+                          {link.label}
+                        </NavigationMenuLink>
+                      </Link>
                     </NavigationMenuItem>
                   ))}
                 </NavigationMenuList>
@@ -98,10 +103,18 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="lg" className="text-sm">
-            <a href="#">Sign In</a>
+            <Link to="/signup">Sign Up</Link>
           </Button>
           <Button asChild size="lg" className="text-sm">
-            <a href="#">Login</a>
+            <Link to="/login">Login</Link>
+          </Button>
+          <Button
+            onClick={handleLogoutClick}
+            asChild
+            size="lg"
+            className="text-sm"
+          >
+            <a href="#">Logout</a>
           </Button>
         </div>
       </div>

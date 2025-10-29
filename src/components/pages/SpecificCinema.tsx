@@ -1,5 +1,6 @@
 import DatePicker from "@/components/items/DatePicker";
 import ScreeningItem from "@/components/items/ScreeningItem";
+import { Link } from "react-router";
 
 import cinemas from "@/components/items/cinemasData";
 const cinema = cinemas[1];
@@ -18,10 +19,12 @@ const SpecificCinema = () => {
         <div className="flex flex-col gap-5">
           {screenings.map((screeningEl, index) => {
             return (
-              <ScreeningItem
-                key={screeningEl._id + index}
-                screening={screeningEl}
-              />
+              <Link to={`/cinemas/${cinema._id}/screenings/${screeningEl._id}`}>
+                <ScreeningItem
+                  key={screeningEl._id + index}
+                  screening={screeningEl}
+                />
+              </Link>
             );
           })}
         </div>

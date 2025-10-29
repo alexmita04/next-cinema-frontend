@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 const ticketsData = [
   { seat: "A", row: "6" },
@@ -31,7 +32,7 @@ const TicketsSelectedBox = () => {
           })}
         </div>
         <Button size="lg" className="px-10 py-7 text-lg font-bold">
-          Checkout
+          <Link to={"#"}>Checkout</Link>
         </Button>
       </div>
     </>

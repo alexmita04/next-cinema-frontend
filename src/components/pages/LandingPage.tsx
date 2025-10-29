@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 const LandingPage = () => {
   return (
@@ -12,7 +13,7 @@ const LandingPage = () => {
           size="lg"
           className="xl:text-2xl xl:px-[40px] xl:py-[30px]"
         >
-          <a href="#">Get a Ticket</a>
+          <Link to="/cinemas">Get a Ticket</Link>
         </Button>
       </div>
     </>

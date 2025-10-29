@@ -16,7 +16,7 @@ import InputError from "@/components/items/InputError";
 import { useAuth } from "@/components/auth/AuthContext";
 import { useMutation } from "@tanstack/react-query";
 import AlertEl from "@/components/items/AlertEl";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 
 const formSchema = z.object({
   username: z.string().min(1, "Username can't be empty"),
@@ -145,9 +145,9 @@ const Signup = () => {
               <InputError fieldError={errors.gender} />
               <p className="mb-5 text-sm">
                 Already having an account?{" "}
-                <a className="text-red-500" href="#">
+                <Link className="text-red-500" to="/login">
                   Login
-                </a>
+                </Link>
               </p>
             </div>
 

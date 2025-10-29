@@ -13,11 +13,13 @@ interface MovieScreeningInfoProps {
     description: string;
   };
   embedLinkString: string;
+  scrollToBuyTickets: () => void;
 }
 
 const MovieScreeningInfo = ({
   movie,
   embedLinkString,
+  scrollToBuyTickets,
 }: MovieScreeningInfoProps) => {
   return (
     <>
@@ -25,7 +27,11 @@ const MovieScreeningInfo = ({
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-5">
           {movie.title}
         </h1>
-        <Button className="px-15 py-7 mb-5" size="lg">
+        <Button
+          className="px-15 py-7 mb-5"
+          size="lg"
+          onClick={scrollToBuyTickets}
+        >
           Buy tickets
         </Button>
       </div>

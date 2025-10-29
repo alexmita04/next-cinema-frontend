@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 interface AdminScreeningCardProps {
   screeningId: string;
@@ -18,7 +19,11 @@ const AdminScreeningCard = ({
           {movieTitle}
         </p>
         <div className="flex gap-1 md:gap-5">
-          <Button variant="outline">Edit</Button>
+          <Button variant="outline">
+            <Link to={`/dashboard/screenings/edit-screening/${screeningId}`}>
+              Edit
+            </Link>
+          </Button>
           <Button>Delete</Button>
         </div>
       </div>

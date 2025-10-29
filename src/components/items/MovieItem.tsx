@@ -5,7 +5,7 @@ interface MovieItemProps {
 
 const MovieItem = ({ title, coverImage }: MovieItemProps) => {
   return (
-    <div className="border-4 border-red-500 rounded-lg relative w-full h-96 overflow-hidden cursor-pointer group">
+    <div className="border-4 border-red-500 rounded-lg relative w-full h-96 overflow-hidden group">
       <img
         src={coverImage}
         alt="movie cover image"
