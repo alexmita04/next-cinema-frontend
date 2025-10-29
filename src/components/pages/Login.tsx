@@ -21,7 +21,6 @@ const Login = () => {
   const { login, loading } = useAuth();
 
   const navigate = useNavigate();
-
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data: boolean | { status: string; message: string }) => {

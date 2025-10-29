@@ -19,6 +19,7 @@ export interface AuthContextInterface {
   accessToken: string | null;
   isAuthenticated: boolean;
   loading: boolean;
+  isAdmin: boolean;
   login: (
     credentials: LoginCredentials
   ) => Promise<boolean | { status: string; message: string }>;
@@ -33,6 +34,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(!!accessToken);
   const [loading, setLoading] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     setIsAuthenticated(!!accessToken);
@@ -47,6 +49,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
       );
       const { accessToken } = response.data.data;
       setAccessToken(accessToken);
+      setIsAdmin(response.data.data.user.isAdmin);
 
       return true;
     } catch (err) {
@@ -70,6 +73,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
       );
       const { accessToken } = response.data.data;
       setAccessToken(accessToken);
+      setIsAdmin(response.data.data.isAdmin);
 
       return true;
     } catch (err) {
@@ -94,6 +98,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     } catch (err) {
       console.log(err);
       setAccessToken(null);
+      setIsAdmin(false);
 
       return false;
     } finally {
@@ -105,6 +110,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     accessToken,
     isAuthenticated,
     loading,
+    isAdmin,
     login,
     signup,
     logout,

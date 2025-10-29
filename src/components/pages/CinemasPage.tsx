@@ -17,9 +17,8 @@ const CinemasPage = () => {
           <div className="grid xl:grid-cols-3 md:grid-cols-2 gap-5 mb-10">
             {cinemas.map((cinemaEl) => {
               return (
-                <Link to={`/cinemas/${cinemaEl._id}`}>
+                <Link to={`/cinemas/${cinemaEl._id}`} key={cinemaEl._id}>
                   <CinemaItem
-                    key={cinemaEl._id}
                     name={cinemaEl.name}
                     location={cinemaEl.location}
                     parking={cinemaEl.parking}

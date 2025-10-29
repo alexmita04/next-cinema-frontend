@@ -19,11 +19,11 @@ const SpecificCinema = () => {
         <div className="flex flex-col gap-5">
           {screenings.map((screeningEl, index) => {
             return (
-              <Link to={`/cinemas/${cinema._id}/screenings/${screeningEl._id}`}>
-                <ScreeningItem
-                  key={screeningEl._id + index}
-                  screening={screeningEl}
-                />
+              <Link
+                to={`/cinemas/${cinema._id}/screenings/${screeningEl._id}`}
+                key={screeningEl._id + index}
+              >
+                <ScreeningItem screening={screeningEl} />
               </Link>
             );
           })}
