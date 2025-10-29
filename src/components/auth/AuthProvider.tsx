@@ -41,16 +41,21 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
   const login = async (credentials: LoginCredentials) => {
     setLoading(true);
     try {
-      const response = await axios.post("/api/users/login", credentials);
-      const { accessToken } = response.data;
+      const response = await axios.post(
+        "https://next-cinema-api.onrender.com/api/users/login",
+        credentials
+      );
+      const { accessToken } = response.data.data;
       setAccessToken(accessToken);
 
       return true;
     } catch (err) {
-      console.log(err);
+      const error = err as AxiosError;
       setAccessToken(null);
-
-      return false;
+      return JSON.parse(error.request.response) as {
+        status: string;
+        message: string;
+      };
     } finally {
       setLoading(false);
     }

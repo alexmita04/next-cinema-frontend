@@ -5,6 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import FormField from "@/components/items/FormField";
 import { useAuth } from "@/components/auth/AuthContext";
+import AlertEl from "@/components/items/AlertEl";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 
 const formSchema = z.object({
   username: z.string().min(1, "Username can't be empty"),
@@ -15,7 +18,28 @@ type FormData = z.infer<typeof formSchema>;
 
 const Login = () => {
   const [error, setError] = useState<null | { title: string }>(null);
-  const { login, setAccessToken, isAuthenticated } = useAuth();
+  const { login, loading } = useAuth();
+
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: (data: boolean | { status: string; message: string }) => {
+      if (
+        typeof data === "object" &&
+        data !== null &&
+        "status" in data &&
+        data.status === "error"
+      ) {
+        setError({ title: data.message });
+      } else {
+        navigate("/cinemas");
+      }
+    },
+    onError: (err: { message: string }) => {
+      setError({ title: err.message });
+    },
+  });
 
   const {
     register,
@@ -30,14 +54,14 @@ const Login = () => {
   });
 
   const onSubmit = (data: FormData) => {
-    console.log("validation passed");
-    console.log(data);
+    mutation.mutate({ ...data });
   };
 
   return (
     <>
       <div className="flex flex-col items-center mt-15">
         <div className="flex flex-col gap-10 w-full max-w-[450px]">
+          {error && <AlertEl variant="destructive" title={error.title} />}
           <h1 className="text-6xl font-medium">Login</h1>
           <form
             className="max-w-[450px] w-full"
@@ -65,7 +89,7 @@ const Login = () => {
               </a>
             </p>
             <Button variant="default" size="lg" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Login"}
+              {isSubmitting || loading ? "Submitting..." : "Login"}
             </Button>
           </form>
         </div>
