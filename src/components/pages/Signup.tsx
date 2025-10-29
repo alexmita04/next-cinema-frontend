@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -12,6 +13,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import FormField from "@/components/items/FormField";
 import InputError from "@/components/items/InputError";
+import { useAuth } from "@/components/auth/AuthContext";
+import { useMutation } from "@tanstack/react-query";
+import AlertEl from "@/components/items/AlertEl";
+import { useNavigate } from "react-router";
 
 const formSchema = z.object({
   username: z.string().min(1, "Username can't be empty"),
@@ -24,6 +29,30 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const Signup = () => {
+  const [error, setError] = useState<{ title: string } | null>(null);
+  const { signup, loading } = useAuth();
+
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: signup,
+    onSuccess: (data: boolean | { status: string; message: string }) => {
+      if (
+        typeof data === "object" &&
+        data !== null &&
+        "status" in data &&
+        data.status === "error"
+      ) {
+        setError({ title: data.message });
+      } else {
+        navigate("/cinemas");
+      }
+    },
+    onError: (err: { message: string }) => {
+      setError({ title: err.message });
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -41,14 +70,14 @@ const Signup = () => {
   });
 
   const onSubmit = (data: FormData) => {
-    console.log("validation passed");
-    console.log(data);
+    mutation.mutate({ ...data });
   };
 
   return (
     <>
       <div className="flex flex-col items-center mt-15">
         <div className="flex flex-col gap-10 w-full max-w-[450px]">
+          {error && <AlertEl variant="destructive" title={error.title} />}
           <h1 className="text-6xl font-medium">Sign up</h1>
           <form
             className="max-w-[450px]"
@@ -123,7 +152,7 @@ const Signup = () => {
             </div>
 
             <Button variant="default" size="lg" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Sign up"}
+              {isSubmitting || loading ? "Submitting..." : "Sign up"}
             </Button>
           </form>
         </div>

@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import FormField from "@/components/items/FormField";
+import { useAuth } from "@/components/auth/AuthContext";
 
 const formSchema = z.object({
   username: z.string().min(1, "Username can't be empty"),
@@ -12,6 +14,9 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const Login = () => {
+  const [error, setError] = useState<null | { title: string }>(null);
+  const { login, setAccessToken, isAuthenticated } = useAuth();
+
   const {
     register,
     handleSubmit,
