@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { AuthContext } from "@/components/auth/AuthContext";
+import ApiClient, { setToken } from "@/lib/apiClient";
 
 interface LoginCredentials {
   username: string;
@@ -37,16 +38,14 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    setToken(accessToken);
     setIsAuthenticated(!!accessToken);
   }, [accessToken]);
 
   const login = async (credentials: LoginCredentials) => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        "https://next-cinema-api.onrender.com/api/users/login",
-        credentials
-      );
+      const response = await ApiClient.post("users/login", credentials);
       const { accessToken } = response.data.data;
       setAccessToken(accessToken);
       setIsAdmin(response.data.data.user.isAdmin);
@@ -67,10 +66,10 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
   const signup = async (credentials: SignupCredentials) => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        "https://next-cinema-api.onrender.com/api/users/register",
-        { ...credentials, dateOfBirth: new Date() }
-      );
+      const response = await ApiClient.post("/users/register", {
+        ...credentials,
+        dateOfBirth: new Date(),
+      });
       const { accessToken } = response.data.data;
       setAccessToken(accessToken);
       setIsAdmin(response.data.data.isAdmin);
@@ -92,20 +91,11 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     setLoading(true);
 
     try {
-      // await axios.post(
-      //   "https://next-cinema-api.onrender.com/api/users/logout",
-      //   null,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${accessToken}`,
-      //     },
-      //   }
-      // );
-
-      await axios.post("https://next-cinema-api.onrender.com/api/users/logout");
+      await ApiClient.post("/users/logout");
       setAccessToken(null);
       setIsAdmin(false);
       setIsAuthenticated(false);
+      setToken(null);
 
       return true;
     } catch (err) {
