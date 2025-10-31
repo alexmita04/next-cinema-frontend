@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -30,9 +30,13 @@ type FormData = z.infer<typeof formSchema>;
 
 const Signup = () => {
   const [error, setError] = useState<{ title: string } | null>(null);
-  const { signup, loading } = useAuth();
+  const { signup, loading, isAuthenticated } = useAuth();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
 
   const mutation = useMutation({
     mutationFn: signup,

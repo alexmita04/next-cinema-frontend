@@ -17,6 +17,9 @@ import AddScreening from "@/components/pages/AddScreening";
 import EditScreening from "@/components/pages/EditScreening";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "@/components/auth/AuthProvider";
+import UserRoute from "@/components/auth/UserRoute";
+import AdminRoute from "@/components/auth/AdminRoute";
+import NotLoggedInRoute from "@/components/auth/NotLoggedInRoute";
 
 const queryClient = new QueryClient();
 
@@ -38,39 +41,60 @@ createRoot(document.getElementById("root")!).render(
 
               {/* Cinema Routes */}
               <Route path="cinemas">
-                <Route index element={<CinemasPage />}></Route>
+                <Route
+                  index
+                  element={<UserRoute Component={CinemasPage} />}
+                ></Route>
                 <Route path=":cinemaId">
-                  <Route index element={<SpecificCinema />}></Route>
+                  <Route
+                    index
+                    element={<UserRoute Component={SpecificCinema} />}
+                  ></Route>
                   <Route
                     path="screenings/:screeningId"
-                    element={<SpecificScreening />}
+                    element={<UserRoute Component={SpecificScreening} />}
                   ></Route>
                 </Route>
               </Route>
 
               {/* Login Page */}
-              <Route path="login" element={<Login />}></Route>
+              <Route
+                path="login"
+                element={<NotLoggedInRoute Component={Login} />}
+              ></Route>
 
               {/* Singup Page */}
-              <Route path="signup" element={<Signup />}></Route>
+              <Route
+                path="signup"
+                element={<NotLoggedInRoute Component={Signup} />}
+              ></Route>
 
               {/* Profile Page */}
-              <Route path="profile" element={<UserProfile />}></Route>
+              <Route
+                path="profile"
+                element={<UserRoute Component={UserProfile} />}
+              ></Route>
 
               {/* Stripe Page */}
-              <Route path="stripe-checkout" element={"stripe-page"}></Route>
+              {/* <Route
+                path="stripe-checkout"
+                element={<UserRoute Component={"stripe"} />}
+              ></Route> */}
 
               {/* Dashboard Route */}
               <Route path="dashboard">
-                <Route index element={<AdminDashboard />}></Route>
+                <Route
+                  index
+                  element={<AdminRoute Component={AdminDashboard} />}
+                ></Route>
                 <Route path="screenings">
                   <Route
                     path="add-screening"
-                    element={<AddScreening />}
+                    element={<AdminRoute Component={AddScreening} />}
                   ></Route>
                   <Route
                     path="edit-screening/:screeningId"
-                    element={<EditScreening />}
+                    element={<AdminRoute Component={EditScreening} />}
                   ></Route>
                 </Route>
               </Route>

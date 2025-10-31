@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,9 +18,14 @@ type FormData = z.infer<typeof formSchema>;
 
 const Login = () => {
   const [error, setError] = useState<null | { title: string }>(null);
-  const { login, loading } = useAuth();
+  const { login, loading, isAuthenticated } = useAuth();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
+
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data: boolean | { status: string; message: string }) => {

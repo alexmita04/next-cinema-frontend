@@ -88,12 +88,17 @@ export default function Navbar() {
               <NavigationMenuList className="gap-2">
                 {navigationLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
-                    <NavigationMenuLink
-                      href={link.href}
-                      className="py-1.5 font-medium text-muted-foreground hover:text-primary"
+                    {/* <Link to={link.href}>
+                      <NavigationMenuLink className="py-1.5 font-medium text-muted-foreground hover:text-primary">
+                        {link.label}
+                      </NavigationMenuLink>
+                    </Link> */}
+                    <Link
+                      to={link.href}
+                      className="py-1.5 font-medium text-sm text-muted-foreground hover:text-primary"
                     >
                       {link.label}
-                    </NavigationMenuLink>
+                    </Link>
                   </NavigationMenuItem>
                 ))}
               </NavigationMenuList>
