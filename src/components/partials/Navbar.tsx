@@ -10,7 +10,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "@/components/auth/AuthContext";
+import { useMutation } from "@tanstack/react-query";
 
 const navigationLinks = [
   { href: "/cinemas", label: "Cinemas" },
@@ -19,7 +21,23 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
-  const handleLogoutClick = () => {};
+  const { logout } = useAuth();
+
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      navigate("/login");
+    },
+    onError: (err: { message: string }) => {
+      console.log(err);
+    },
+  });
+
+  const logoutHandler = () => {
+    mutation.mutate();
+  };
 
   return (
     <header className="border-b">
@@ -113,12 +131,7 @@ export default function Navbar() {
           <Button asChild size="lg" className="text-sm">
             <Link to="/login">Login</Link>
           </Button>
-          <Button
-            onClick={handleLogoutClick}
-            asChild
-            size="lg"
-            className="text-sm"
-          >
+          <Button onClick={logoutHandler} asChild size="lg" className="text-sm">
             <a href="#">Logout</a>
           </Button>
         </div>

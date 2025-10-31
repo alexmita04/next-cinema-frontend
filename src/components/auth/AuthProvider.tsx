@@ -92,7 +92,20 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     setLoading(true);
 
     try {
-      await axios.post("/api/users/logout");
+      // await axios.post(
+      //   "https://next-cinema-api.onrender.com/api/users/logout",
+      //   null,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${accessToken}`,
+      //     },
+      //   }
+      // );
+
+      await axios.post("https://next-cinema-api.onrender.com/api/users/logout");
+      setAccessToken(null);
+      setIsAdmin(false);
+      setIsAuthenticated(false);
 
       return true;
     } catch (err) {
