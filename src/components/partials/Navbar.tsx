@@ -14,14 +14,18 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "@/components/auth/AuthContext";
 import { useMutation } from "@tanstack/react-query";
 
-const navigationLinks = [
+const navigationLinksUser = [
   { href: "/cinemas", label: "Cinemas" },
   { href: "/profile", label: "Profile" },
+];
+
+const navigationLinksAdmin = [
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/dashboard/screenings/add-screening", label: "Add Screening" },
 ];
 
 export default function Navbar() {
-  const { logout } = useAuth();
+  const { logout, isAuthenticated, isAdmin } = useAuth();
 
   const navigate = useNavigate();
 
@@ -82,15 +86,31 @@ export default function Navbar() {
             <PopoverContent align="start" className="w-36 p-1 md:hidden">
               <NavigationMenu className="max-w-none *:w-full">
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-                  {navigationLinks.map((link, index) => (
-                    <NavigationMenuItem key={index} className="w-full">
-                      <Link to={link.href}>
-                        <NavigationMenuLink className="py-1.5">
-                          {link.label}
-                        </NavigationMenuLink>
-                      </Link>
-                    </NavigationMenuItem>
-                  ))}
+                  {!isAdmin ? (
+                    <>
+                      {navigationLinksUser.map((link, index) => (
+                        <NavigationMenuItem key={index} className="w-full">
+                          <Link to={link.href}>
+                            <NavigationMenuLink className="py-1.5">
+                              {link.label}
+                            </NavigationMenuLink>
+                          </Link>
+                        </NavigationMenuItem>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {navigationLinksAdmin.map((link, index) => (
+                        <NavigationMenuItem key={index} className="w-full">
+                          <Link to={link.href}>
+                            <NavigationMenuLink className="py-1.5">
+                              {link.label}
+                            </NavigationMenuLink>
+                          </Link>
+                        </NavigationMenuItem>
+                      ))}
+                    </>
+                  )}
                 </NavigationMenuList>
               </NavigationMenu>
             </PopoverContent>
@@ -104,36 +124,70 @@ export default function Navbar() {
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
-                {navigationLinks.map((link, index) => (
-                  <NavigationMenuItem key={index}>
-                    {/* <Link to={link.href}>
+                {!isAdmin ? (
+                  <>
+                    {navigationLinksUser.map((link, index) => (
+                      <NavigationMenuItem key={index}>
+                        {/* <Link to={link.href}>
                       <NavigationMenuLink className="py-1.5 font-medium text-muted-foreground hover:text-primary">
                         {link.label}
                       </NavigationMenuLink>
                     </Link> */}
-                    <Link
-                      to={link.href}
-                      className="py-1.5 font-medium text-sm text-muted-foreground hover:text-primary"
-                    >
-                      {link.label}
-                    </Link>
-                  </NavigationMenuItem>
-                ))}
+                        <Link
+                          to={link.href}
+                          className="py-1.5 font-medium text-sm text-muted-foreground hover:text-primary"
+                        >
+                          {link.label}
+                        </Link>
+                      </NavigationMenuItem>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {navigationLinksAdmin.map((link, index) => (
+                      <NavigationMenuItem key={index}>
+                        {/* <Link to={link.href}>
+                      <NavigationMenuLink className="py-1.5 font-medium text-muted-foreground hover:text-primary">
+                        {link.label}
+                      </NavigationMenuLink>
+                    </Link> */}
+                        <Link
+                          to={link.href}
+                          className="py-1.5 font-medium text-sm text-muted-foreground hover:text-primary"
+                        >
+                          {link.label}
+                        </Link>
+                      </NavigationMenuItem>
+                    ))}
+                  </>
+                )}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Button asChild variant="outline" size="lg" className="text-sm">
-            <Link to="/signup">Sign Up</Link>
-          </Button>
-          <Button asChild size="lg" className="text-sm">
-            <Link to="/login">Login</Link>
-          </Button>
-          <Button onClick={logoutHandler} asChild size="lg" className="text-sm">
-            <a href="#">Logout</a>
-          </Button>
+          {!isAuthenticated ? (
+            <>
+              <Button asChild variant="outline" size="lg" className="text-sm">
+                <Link to="/signup">Sign Up</Link>
+              </Button>
+              <Button asChild size="lg" className="text-sm">
+                <Link to="/login">Login</Link>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={logoutHandler}
+                asChild
+                size="lg"
+                className="text-sm"
+              >
+                <a href="#">Logout</a>
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </header>
