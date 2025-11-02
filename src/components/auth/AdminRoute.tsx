@@ -47,7 +47,14 @@ const AdminRoute = ({ Component }: AdminRouteInterface) => {
     } else {
       setOkToRender(true);
     }
-  }, [isAuthenticated, isAdmin, navigate, isPossibleAdmin, setAccessToken]);
+  }, [
+    isAuthenticated,
+    isAdmin,
+    navigate,
+    isPossibleAdmin,
+    setAccessToken,
+    setIsAdmin,
+  ]);
 
   return <>{okToRender && <Component />}</>;
 };
