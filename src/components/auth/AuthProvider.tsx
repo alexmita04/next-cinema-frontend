@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { AxiosError } from "axios";
 import { AuthContext } from "@/components/auth/AuthContext";
-import ApiClient, { setToken } from "@/lib/apiClient";
+import ApiClient, { setToken, setTokenRefreshCallback } from "@/lib/apiClient";
 
 interface LoginCredentials {
   username: string;
@@ -28,6 +28,7 @@ export interface AuthContextInterface {
     credentials: SignupCredentials
   ) => Promise<boolean | { status: string; message: string }>;
   logout: () => Promise<boolean>;
+  setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
@@ -36,6 +37,18 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!accessToken);
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const handleTokenRefresh = useCallback((newToken: string | null) => {
+    setAccessToken(newToken);
+  }, []);
+
+  useEffect(() => {
+    setTokenRefreshCallback(handleTokenRefresh);
+
+    return () => {
+      setTokenRefreshCallback(null);
+    };
+  }, [handleTokenRefresh]);
 
   useEffect(() => {
     setToken(accessToken);
@@ -117,6 +130,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     login,
     signup,
     logout,
+    setIsAdmin,
     setAccessToken,
   };
 

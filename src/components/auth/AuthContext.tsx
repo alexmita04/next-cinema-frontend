@@ -9,6 +9,7 @@ export const AuthContext = createContext<AuthContextInterface>({
   login: async () => false,
   signup: async () => false,
   logout: async () => false,
+  setIsAdmin: () => {},
   setAccessToken: () => {},
 });
 
