@@ -5,11 +5,24 @@ import ScreeningItem, {
 import CustomSpinner from "@/components/items/CustomSpinner";
 import {
   type CinemaInterface,
-  type ScreeningInterface,
+  type AuditoriumInterface,
+  type MovieInterface,
 } from "@/lib/backendTypes";
 import ApiClient from "@/lib/apiClient";
 import { useParams } from "react-router";
 import { useState, useEffect, useCallback } from "react";
+
+interface ScreeningInterface {
+  _id: string;
+  auditorium: AuditoriumInterface;
+  movie: MovieInterface;
+  cinema: string;
+  date: string;
+  startTime: number;
+  pricing: number;
+  language: string;
+  subtitle: string;
+}
 
 const startOfToday = () => {
   const now = new Date();

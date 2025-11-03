@@ -28,11 +28,11 @@ const ScreeningItem = ({ screening }: { screening: ScreeningItemProps }) => {
         <div className="pl-5 sm:pl-0 py-5 flex flex-col gap-5">
           <h3 className="text-2xl font-bold">{screening.movie.title}</h3>
           <div className="flex flex-wrap gap-x-5 gap-y-3">
-            {screening.auditoriums.map((auditoriumEl) => {
+            {screening.auditoriums.map((auditoriumEl, index) => {
               return (
                 <Link
-                  key={`${auditoriumEl._id}${screening._id}`}
-                  to={`/cinemas/${screening.cinemaId}/screenings/${screening._id}`}
+                  key={`${auditoriumEl._id}${screening._id}${index}`}
+                  to={`/cinemas/${screening.cinemaId}/auditoriums/${auditoriumEl._id}/screenings/${screening._id}`}
                 >
                   <Button key={auditoriumEl._id} size="sm" variant="outline">
                     {auditoriumEl.start}

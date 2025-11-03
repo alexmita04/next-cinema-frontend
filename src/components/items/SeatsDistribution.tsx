@@ -16,32 +16,34 @@ const SeatsDistribution = () => {
         <div className="flex flex-col gap-1 md:gap-2 px-4">
           {seats.map((rowEl, indexRow) => {
             return (
-              <>
-                <div className="flex items-center font-bold">
-                  <div className="w-8 md:w-10">{indexRow + 1}</div>
-                  <div className="flex gap-3 md:gap-5">
-                    {rowEl.map((seat, indexSeat) => {
-                      return (
-                        <>
-                          <div className="flex flex-col justify-center items-center gap-1 font-bold">
-                            {indexRow === 0 ? (
-                              <div>{SEATS_LETTERS[indexSeat]}</div>
-                            ) : (
-                              ""
-                            )}
-                            <div
-                              key={indexRow + indexSeat}
-                              className="bg-red-500 h-5 w-5 md:h-10 md:w-10 rounded-t-3xl flex justify-center items-center font-bold text-white hover:bg-red-800 cursor-pointer"
-                            >
-                              {seat === 1 ? "X" : ""}
-                            </div>
-                          </div>
-                        </>
-                      );
-                    })}
-                  </div>
+              <div
+                className="flex items-center font-bold"
+                key={`${rowEl}${indexRow}`}
+              >
+                <div className="w-8 md:w-10">{indexRow + 1}</div>
+                <div className="flex gap-3 md:gap-5">
+                  {rowEl.map((seat, indexSeat) => {
+                    return (
+                      <div
+                        className="flex flex-col justify-center items-center gap-1 font-bold"
+                        key={`${seat}${indexSeat}`}
+                      >
+                        {indexRow === 0 ? (
+                          <div>{SEATS_LETTERS[indexSeat]}</div>
+                        ) : (
+                          ""
+                        )}
+                        <div
+                          key={indexRow + indexSeat}
+                          className="bg-red-500 h-5 w-5 md:h-10 md:w-10 rounded-t-3xl flex justify-center items-center font-bold text-white hover:bg-red-800 cursor-pointer"
+                        >
+                          {seat === 1 ? "X" : ""}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              </>
+              </div>
             );
           })}
         </div>

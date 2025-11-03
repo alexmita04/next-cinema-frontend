@@ -51,7 +51,7 @@ createRoot(document.getElementById("root")!).render(
                     element={<UserRoute Component={SpecificCinema} />}
                   ></Route>
                   <Route
-                    path="screenings/:screeningId"
+                    path="auditoriums/:auditoriumId/screenings/:screeningId"
                     element={<UserRoute Component={SpecificScreening} />}
                   ></Route>
                 </Route>

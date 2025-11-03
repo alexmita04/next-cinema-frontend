@@ -4,12 +4,6 @@ import { Link } from "react-router";
 const ticketsData = [
   { seat: "A", row: "6" },
   { seat: "B", row: "6" },
-  { seat: "A", row: "6" },
-  { seat: "B", row: "6" },
-  { seat: "A", row: "6" },
-  { seat: "B", row: "6" },
-  { seat: "A", row: "6" },
-  { seat: "B", row: "6" },
 ];
 
 const TicketsSelectedBox = () => {
@@ -20,7 +14,10 @@ const TicketsSelectedBox = () => {
         <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
           {ticketsData.map((ticketEl) => {
             return (
-              <div className="flex flex-col items-center border-2 border-black p-4 rounded-lg">
+              <div
+                className="flex flex-col items-center border-2 border-black p-4 rounded-lg"
+                key={`${ticketEl.row}${ticketEl.seat}`}
+              >
                 <p className="text-sm md:text-lg">
                   Ticket <span>{ticketEl.seat + ticketEl.row}</span>
                 </p>

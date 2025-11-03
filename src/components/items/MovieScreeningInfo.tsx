@@ -1,26 +1,21 @@
 import { Button } from "@/components/ui/button";
+import { type MovieInterface } from "@/lib/backendTypes";
 
 interface MovieScreeningInfoProps {
-  movie: {
-    title: string;
-    coverImage: string;
-    releaseDate: string;
-    duration: number;
-    genres: string[];
-    distribution: string;
-    production: string;
-    director: string;
-    description: string;
-  };
-  embedLinkString: string;
+  movie: MovieInterface;
   scrollToBuyTickets: () => void;
 }
 
 const MovieScreeningInfo = ({
   movie,
-  embedLinkString,
   scrollToBuyTickets,
 }: MovieScreeningInfoProps) => {
+  const trailerUrl: string = movie.trailer;
+  const embedLinkString: string = trailerUrl.replace(
+    "youtu.be/",
+    "www.youtube.com/embed/"
+  );
+
   return (
     <>
       <div className="flex flex-wrap justify-between items-center mt-10 mb-5">
@@ -53,7 +48,8 @@ const MovieScreeningInfo = ({
         </div>
         <div className="flex flex-col gap-5 text-lg md:text-xl mb-10">
           <div className="border-b-2 pb-2">
-            <span className="font-bold">Release Date:</span> {movie.releaseDate}
+            <span className="font-bold">Release Date:</span>{" "}
+            {`${movie.releaseDate.slice(0, 10)}`}
           </div>
           <div className="border-b-2 pb-2">
             <span className="font-bold">Duration:</span> {movie.duration} min

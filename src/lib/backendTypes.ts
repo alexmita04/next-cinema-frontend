@@ -3,7 +3,7 @@ export interface MovieInterface {
   title: string;
   description: string;
   duration: number;
-  releaseDate: Date;
+  releaseDate: string;
   genres: string[];
   cast: MovieCastInterface[];
   director: string;
@@ -30,7 +30,7 @@ export interface CinemaInterface {
   admin: string;
 }
 
-interface AuditoriumInterface {
+export interface AuditoriumInterface {
   _id: string;
   number: number;
   capacity: number;
@@ -47,8 +47,8 @@ export interface ScreeningInterface {
   _id: string;
   auditorium: AuditoriumInterface;
   movie: MovieInterface;
-  cinema: string;
-  date: Date;
+  cinema: CinemaInterface;
+  date: string;
   startTime: number;
   pricing: number;
   language: string;
