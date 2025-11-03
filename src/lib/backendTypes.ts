@@ -42,3 +42,15 @@ interface AuditoriumInterface {
   soundSystem: string;
   projection: string;
 }
+
+export interface ScreeningInterface {
+  _id: string;
+  auditorium: AuditoriumInterface;
+  movie: MovieInterface;
+  cinema: string;
+  date: Date;
+  startTime: number;
+  pricing: number;
+  language: string;
+  subtitle: string;
+}

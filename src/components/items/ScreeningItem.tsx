@@ -1,36 +1,20 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
-interface ScreeningItemProps {
-  auditoriums: string[];
-  cinema: string;
-  createdAt: string;
-  date: string;
-  language: string;
+export interface ScreeningItemProps {
+  _id: string;
+  auditoriums: { start: string; _id: string }[];
   movie: {
+    _id: string;
     title: string;
     coverImage: string;
     duration: number;
     genres: string[];
     director: string;
   };
-  pricing: number;
   startTime: number;
-  subtitle: string;
-  updatedAt: string;
+  cinemaId: string;
 }
-
-const hours = [
-  "12:00 (Auditorium 1)",
-  "12:00 (Auditorium 2)",
-  "12:00 (Auditorium 3)",
-  "14:00 (Auditorium 1)",
-  "14:00 (Auditorium 2)",
-  "14:00 (Auditorium 3)",
-  "17:00 (Auditorium 1)",
-  "17:00 (Auditorium 2)",
-  "17:00 (Auditorium 3)",
-  "22:00 (Auditorium 1)",
-];
 
 const ScreeningItem = ({ screening }: { screening: ScreeningItemProps }) => {
   return (
@@ -44,11 +28,16 @@ const ScreeningItem = ({ screening }: { screening: ScreeningItemProps }) => {
         <div className="pl-5 sm:pl-0 py-5 flex flex-col gap-5">
           <h3 className="text-2xl font-bold">{screening.movie.title}</h3>
           <div className="flex flex-wrap gap-x-5 gap-y-3">
-            {hours.map((hourEl) => {
+            {screening.auditoriums.map((auditoriumEl) => {
               return (
-                <Button key={hourEl} size="sm" variant="outline">
-                  {hourEl}
-                </Button>
+                <Link
+                  key={`${auditoriumEl._id}${screening._id}`}
+                  to={`/cinemas/${screening.cinemaId}/screenings/${screening._id}`}
+                >
+                  <Button key={auditoriumEl._id} size="sm" variant="outline">
+                    {auditoriumEl.start}
+                  </Button>
+                </Link>
               );
             })}
           </div>
