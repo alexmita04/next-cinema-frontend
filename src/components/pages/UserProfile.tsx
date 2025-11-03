@@ -1,4 +1,8 @@
 import WalletTicket from "@/components/items/WalletTicket";
+import ApiClient from "@/lib/apiClient";
+import { useEffect, useState } from "react";
+import { type UserInterface, type TicketInterface } from "@/lib/backendTypes";
+import CustomSpinner from "@/components/items/CustomSpinner";
 
 const userData = {
   username: "alexmita04",
@@ -9,132 +13,96 @@ const userData = {
   isAdmin: false,
 };
 
-const tickets = [
-  {
-    screening: {
-      auditorium: "Auditorium 1",
-      movie: {
-        title: "Saving Private Ryan",
-        coverImage:
-          "https://resizing.flixster.com/w3n4-6BPPmegOYfBinbTgvms7Uk=/206x305/v2/https://resizing.flixster.com/e4XDrbw7Fd7VYePV7cxB8sQV3eA=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzc1MDczNGJlLWNjN2EtNGIxMS1iOWM5LWJjYTUwODk4MzA5Yy53ZWJw",
-      },
-      cinema: "Cinema X",
-
-      date: "2025-10-10",
-      startTime: 13,
-    },
-    seat: {
-      row: 4,
-      number: 5,
-    },
-  },
-  {
-    screening: {
-      auditorium: "Auditorium 1",
-      movie: {
-        title: "Saving Private Ryan",
-        coverImage:
-          "https://resizing.flixster.com/w3n4-6BPPmegOYfBinbTgvms7Uk=/206x305/v2/https://resizing.flixster.com/e4XDrbw7Fd7VYePV7cxB8sQV3eA=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzc1MDczNGJlLWNjN2EtNGIxMS1iOWM5LWJjYTUwODk4MzA5Yy53ZWJw",
-      },
-      cinema: "Cinema X",
-
-      date: "2025-10-10",
-      startTime: 13,
-    },
-    seat: {
-      row: 4,
-      number: 5,
-    },
-  },
-  {
-    screening: {
-      auditorium: "Auditorium 1",
-      movie: {
-        title: "Saving Private Ryan",
-        coverImage:
-          "https://resizing.flixster.com/w3n4-6BPPmegOYfBinbTgvms7Uk=/206x305/v2/https://resizing.flixster.com/e4XDrbw7Fd7VYePV7cxB8sQV3eA=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzc1MDczNGJlLWNjN2EtNGIxMS1iOWM5LWJjYTUwODk4MzA5Yy53ZWJw",
-      },
-      cinema: "Cinema X",
-
-      date: "2025-10-10",
-      startTime: 13,
-    },
-    seat: {
-      row: 4,
-      number: 5,
-    },
-  },
-  {
-    screening: {
-      auditorium: "Auditorium 1",
-      movie: {
-        title: "Saving Private Ryan",
-        coverImage:
-          "https://resizing.flixster.com/w3n4-6BPPmegOYfBinbTgvms7Uk=/206x305/v2/https://resizing.flixster.com/e4XDrbw7Fd7VYePV7cxB8sQV3eA=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzc1MDczNGJlLWNjN2EtNGIxMS1iOWM5LWJjYTUwODk4MzA5Yy53ZWJw",
-      },
-      cinema: "Cinema X",
-
-      date: "2025-10-10",
-      startTime: 13,
-    },
-    seat: {
-      row: 4,
-      number: 5,
-    },
-  },
-  {
-    screening: {
-      auditorium: "Auditorium 1",
-      movie: {
-        title: "Saving Private Ryan",
-        coverImage:
-          "https://resizing.flixster.com/w3n4-6BPPmegOYfBinbTgvms7Uk=/206x305/v2/https://resizing.flixster.com/e4XDrbw7Fd7VYePV7cxB8sQV3eA=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzc1MDczNGJlLWNjN2EtNGIxMS1iOWM5LWJjYTUwODk4MzA5Yy53ZWJw",
-      },
-      cinema: "Cinema X",
-      date: "2025-10-10",
-      startTime: 13,
-    },
-    seat: {
-      row: 4,
-      number: 5,
-    },
-  },
-];
-
 const UserProfile = () => {
+  const [user, setUser] = useState<null | UserInterface>(null);
+  const [tickets, setTickets] = useState<null | TicketInterface[]>(null);
+
+  // fetch user information
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchUser = async () => {
+      const response = await ApiClient.get("/users/profile");
+
+      if (isMounted) {
+        setUser(response.data.data.profileInformation);
+      }
+    };
+
+    fetchUser();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchTickets = async () => {
+      const response = await ApiClient.get("/users/profile/tickets");
+
+      if (isMounted) {
+        if (isMounted) {
+          const fetchedTickets = response.data.data.tickets;
+          setTickets(fetchedTickets);
+        }
+      }
+    };
+
+    fetchTickets();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <>
       <div className="border-3 border-black p-10 rounded-lg mt-10 mb-10 text-sm md:text-lg">
         <h1 className="font-bold text-2xl sm:text-4xl md:text-5xl mb-5">
           Profile Information
         </h1>
-        <p className="pb-2 border-b-2 mb-5">
-          <span className="font-bold">Username:</span> {userData.username}
-        </p>
-        <p className="pb-2 border-b-2 mb-5">
-          <span className="font-bold">Date of Birth:</span>{" "}
-          {userData.dateOfBirth}
-        </p>
-        <p className="pb-2 border-b-2 mb-5">
-          {" "}
-          <span className="font-bold">Gender:</span> {userData.gender}
-        </p>
-        <p className="pb-2 border-b-2 mb-5">
-          {" "}
-          <span className="font-bold">Phone Number:</span>{" "}
-          {userData.phoneNumber}
-        </p>
-        <p className="pb-2 border-b-2">
-          {" "}
-          <span className="font-bold">Address:</span> {userData.address}
-        </p>
+        {user === null ? (
+          <CustomSpinner size={4} />
+        ) : (
+          <>
+            <p className="pb-2 border-b-2 mb-5">
+              <span className="font-bold">Username:</span> {userData.username}
+            </p>
+            <p className="pb-2 border-b-2 mb-5">
+              <span className="font-bold">Date of Birth:</span>{" "}
+              {userData.dateOfBirth}
+            </p>
+            <p className="pb-2 border-b-2 mb-5">
+              {" "}
+              <span className="font-bold">Gender:</span> {userData.gender}
+            </p>
+            <p className="pb-2 border-b-2 mb-5">
+              {" "}
+              <span className="font-bold">Phone Number:</span>{" "}
+              {userData.phoneNumber}
+            </p>
+            <p className="pb-2 border-b-2">
+              {" "}
+              <span className="font-bold">Address:</span> {userData.address}
+            </p>
+          </>
+        )}
       </div>
       <div className="border-3 border-black p-10 rounded-lg mb-10">
         <h2 className="text-5xl font-bold mb-10">Wallet</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-          {tickets.map((ticketEl, index) => {
-            return <WalletTicket key={index} ticket={ticketEl} />;
-          })}
+          {tickets === null ? (
+            <CustomSpinner size={4} />
+          ) : (
+            <>
+              {tickets.length === 0 && <p>No tickets</p>}
+              {tickets.map((ticketEl, index) => {
+                return <WalletTicket key={index} ticket={ticketEl} />;
+              })}
+            </>
+          )}
         </div>
       </div>
     </>

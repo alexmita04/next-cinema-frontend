@@ -54,3 +54,24 @@ export interface ScreeningInterface {
   language: string;
   subtitle: string;
 }
+
+export interface UserInterface {
+  address: string;
+  createdAt: string;
+  dateOfBirth: string;
+  gender: string;
+  isAdmin: boolean;
+  phoneNumber: string;
+  username: string;
+}
+
+export interface TicketInterface {
+  screening: ScreeningInterface;
+  customer: string;
+  seat: {
+    row: number;
+    number: number;
+  };
+  totalPrice: number;
+  pricingCategory: "standard" | "student";
+}

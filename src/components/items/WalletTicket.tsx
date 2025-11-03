@@ -1,20 +1,7 @@
+import { type TicketInterface } from "@/lib/backendTypes";
+
 interface WalletTicketProp {
-  ticket: {
-    screening: {
-      auditorium: string;
-      movie: {
-        title: string;
-        coverImage: string;
-      };
-      cinema: string;
-      date: string;
-      startTime: number;
-    };
-    seat: {
-      row: number;
-      number: number;
-    };
-  };
+  ticket: TicketInterface;
 }
 
 const WalletTicket = ({ ticket }: WalletTicketProp) => {
@@ -34,7 +21,6 @@ const WalletTicket = ({ ticket }: WalletTicketProp) => {
             Place: {ticket.seat.row}
             {ticket.seat.number}
           </p>
-          <p>{ticket.screening.auditorium}</p>
           <p>
             {ticket.screening.date} - {ticket.screening.startTime}:00
           </p>
