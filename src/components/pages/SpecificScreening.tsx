@@ -20,12 +20,17 @@ const SpecificScreening = () => {
     let isMounted = true;
 
     const fetchScreening = async () => {
-      const response = await ApiClient.get(
-        `/cinemas/${cinemaId}/auditoriums/${auditoriumId}/screenings/${screeningId}`
-      );
+      try {
+        const response = await ApiClient.get(
+          `/cinemas/${cinemaId}/auditoriums/${auditoriumId}/screenings/${screeningId}`
+        );
 
-      if (isMounted) {
-        setScreening(response.data.data.screening);
+        if (isMounted) {
+          setScreening(response.data.data.screening);
+        }
+      } catch (err) {
+        console.log(err);
+        setScreening(null);
       }
     };
 

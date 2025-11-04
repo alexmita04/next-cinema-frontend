@@ -22,10 +22,15 @@ const UserProfile = () => {
     let isMounted = true;
 
     const fetchUser = async () => {
-      const response = await ApiClient.get("/users/profile");
+      try {
+        const response = await ApiClient.get("/users/profile");
 
-      if (isMounted) {
-        setUser(response.data.data.profileInformation);
+        if (isMounted) {
+          setUser(response.data.data.profileInformation);
+        }
+      } catch (err) {
+        console.log(err);
+        setUser(null);
       }
     };
 
@@ -40,13 +45,18 @@ const UserProfile = () => {
     let isMounted = true;
 
     const fetchTickets = async () => {
-      const response = await ApiClient.get("/users/profile/tickets");
+      try {
+        const response = await ApiClient.get("/users/profile/tickets");
 
-      if (isMounted) {
         if (isMounted) {
-          const fetchedTickets = response.data.data.tickets;
-          setTickets(fetchedTickets);
+          if (isMounted) {
+            const fetchedTickets = response.data.data.tickets;
+            setTickets(fetchedTickets);
+          }
         }
+      } catch (err) {
+        console.log(err);
+        setTickets(null);
       }
     };
 
