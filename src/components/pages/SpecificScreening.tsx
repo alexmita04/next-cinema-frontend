@@ -2,18 +2,32 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import MovieScreeningInfo from "@/components/items/MovieScreeningInfo";
 import SeatsDistribution from "@/components/items/SeatsDistribution";
 import TicketsSelectedBox from "@/components/items/TicketsSelectedBox";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { type ScreeningInterface } from "@/lib/backendTypes";
 import ApiClient from "@/lib/apiClient";
 import { useParams } from "react-router";
 import CustomSpinner from "@/components/items/CustomSpinner";
+import { type StripeTicketInterface } from "@/components/items/StripeCheckout";
+import { useAuth } from "../auth/AuthContext";
 
-// import screening from "@/components/items/screening.json";
+export interface SelectedTicketsInterface {
+  seatRow: number;
+  seatNumber: number;
+}
 
 const SpecificScreening = () => {
   const [screening, setScreening] = useState<null | ScreeningInterface>(null);
+  const [selectedTickets, setSelectedTickets] = useState<
+    SelectedTicketsInterface[]
+  >([]);
+  const [bookedTickets, setBookedTickets] = useState<
+    null | SelectedTicketsInterface[]
+  >(null);
   const buyTicketsRef = useRef<HTMLDivElement | null>(null);
   const { auditoriumId, screeningId, cinemaId } = useParams();
+  const { userId } = useAuth();
+
+  const navigate = useNavigate();
 
   // fetch screening
   useEffect(() => {
@@ -41,18 +55,75 @@ const SpecificScreening = () => {
     };
   }, [cinemaId, auditoriumId, screeningId]);
 
-  // const trailerUrl: string = screening.movie.trailer;
-  // const embedLinkString: string = trailerUrl.replace(
-  //   "youtu.be/",
-  //   "www.youtube.com/embed/"
-  // );
+  // fetch bookedTickers
+  useEffect(() => {
+    let isMounted = true;
 
+    const fetchBookedTickets = async () => {
+      try {
+        const response = await ApiClient.get(
+          `/tickets/screenings/${screeningId}`
+        );
+
+        if (isMounted) {
+          const fetchedTickets = response.data.data.tickets;
+          if (fetchedTickets.length) {
+            setBookedTickets([
+              ...fetchedTickets.map(
+                (fetchedTicketEl: {
+                  seat: { row: number; number: number };
+                }) => ({
+                  seatRow: fetchedTicketEl.seat.row,
+                  seatNumber: fetchedTicketEl.seat.number,
+                })
+              ),
+            ]);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+        setBookedTickets(null);
+      }
+    };
+
+    fetchBookedTickets();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [screeningId]);
+
+  // scroll to buy tickets
   const scrollToBuyTickets = useCallback(() => {
     buyTicketsRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
   }, []);
+
+  const handleRedirectToCheckout = () => {
+    console.log(userId);
+    if (screening && selectedTickets.length && userId) {
+      const checkoutTickets: StripeTicketInterface[] = selectedTickets.map(
+        (ticket) => {
+          return {
+            totalPrice: screening.pricing,
+            screeningId: screening._id,
+            userId: userId,
+            pricingCategory: "standard",
+            seatRow: ticket.seatRow,
+            seatNumber: ticket.seatNumber,
+          };
+        }
+      );
+
+      navigate("/checkout", {
+        state: {
+          tickets: checkoutTickets,
+        },
+      });
+    }
+  };
 
   return (
     <>
@@ -97,9 +168,17 @@ const SpecificScreening = () => {
               (SEE THE SELECTED TICKETS UNDER THE SEATS LAYOUT)
             </p>
             <div className="flex flex-col xl:flex-row gap-10 xl:gap-20">
-              <SeatsDistribution />
+              <SeatsDistribution
+                setSelectedTickets={setSelectedTickets}
+                bookedTickets={bookedTickets}
+                selectedTickets={selectedTickets}
+              />
               <div className="flex-grow">
-                <TicketsSelectedBox />
+                <TicketsSelectedBox
+                  handleRedirectToCheckout={handleRedirectToCheckout}
+                  selectedTickets={selectedTickets}
+                  setSelectedTickets={setSelectedTickets}
+                />
               </div>
             </div>
           </div>

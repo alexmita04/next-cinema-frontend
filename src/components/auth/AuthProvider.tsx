@@ -30,6 +30,7 @@ export interface AuthContextInterface {
   logout: () => Promise<boolean>;
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>;
+  userId: string | null;
 }
 
 const AuthProvider = ({ children }: { children: React.ReactElement }) => {
@@ -37,6 +38,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!accessToken);
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [userId, setUserId] = useState<null | string>(null);
 
   const handleTokenRefresh = useCallback((newToken: string | null) => {
     setAccessToken(newToken);
@@ -60,8 +62,10 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     try {
       const response = await ApiClient.post("users/login", credentials);
       const { accessToken } = response.data.data;
+      const { id } = response.data.data.user;
       setAccessToken(accessToken);
       setIsAdmin(response.data.data.user.isAdmin);
+      setUserId(id);
 
       return true;
     } catch (err) {
@@ -83,9 +87,10 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
         ...credentials,
         dateOfBirth: new Date(),
       });
-      const { accessToken } = response.data.data;
+      const { accessToken, _id } = response.data.data;
       setAccessToken(accessToken);
       setIsAdmin(response.data.data.isAdmin);
+      setUserId(_id);
 
       return true;
     } catch (err) {
@@ -109,6 +114,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
       setIsAdmin(false);
       setIsAuthenticated(false);
       setToken(null);
+      setUserId(null);
 
       return true;
     } catch (err) {
@@ -132,6 +138,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     logout,
     setIsAdmin,
     setAccessToken,
+    userId,
   };
 
   return (

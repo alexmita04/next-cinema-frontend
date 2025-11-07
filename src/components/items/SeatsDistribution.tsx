@@ -1,3 +1,6 @@
+import { type SelectedTicketsInterface } from "@/components/pages/SpecificScreening";
+import SeatItem from "@/components/items/SeatItem";
+
 const ROWS = 10;
 const SEATS_PER_ROW = 10;
 const SEATS_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
@@ -6,7 +9,71 @@ const seats = Array.from({ length: ROWS }, () => {
   return Array(SEATS_PER_ROW).fill(0);
 });
 
-const SeatsDistribution = () => {
+interface SeatsDistributionPropsInterface {
+  setSelectedTickets: React.Dispatch<
+    React.SetStateAction<SelectedTicketsInterface[]>
+  >;
+  bookedTickets: null | SelectedTicketsInterface[];
+  selectedTickets: SelectedTicketsInterface[];
+}
+
+const checkIfSeatIsBooked = (
+  rowIndex: number,
+  numberIndex: number,
+  bookedTickets: null | SelectedTicketsInterface[]
+): boolean => {
+  if (bookedTickets) {
+    for (const bookedTicket of bookedTickets) {
+      if (
+        bookedTicket.seatRow === rowIndex + 1 &&
+        bookedTicket.seatNumber === numberIndex + 1
+      ) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+};
+
+const checkIfSeatIsSelected = (
+  rowIndex: number,
+  numberIndex: number,
+  selectedTickets: SelectedTicketsInterface[]
+) => {
+  if (selectedTickets.length) {
+    for (const ticket of selectedTickets) {
+      if (ticket.seatRow === rowIndex && ticket.seatNumber === numberIndex) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+};
+
+const getSeatState = (
+  rowIndex: number,
+  numberIndex: number,
+  bookedTickets: null | SelectedTicketsInterface[],
+  selectedTickets: SelectedTicketsInterface[]
+) => {
+  if (checkIfSeatIsBooked(rowIndex, numberIndex, bookedTickets)) {
+    return "booked";
+  }
+
+  if (checkIfSeatIsSelected(rowIndex, numberIndex, selectedTickets)) {
+    return "selected";
+  }
+
+  return "notSelected";
+};
+
+const SeatsDistribution = ({
+  setSelectedTickets,
+  bookedTickets,
+  selectedTickets,
+}: SeatsDistributionPropsInterface) => {
   return (
     <>
       <div className="flex flex-col items-center">
@@ -33,12 +100,17 @@ const SeatsDistribution = () => {
                         ) : (
                           ""
                         )}
-                        <div
-                          key={indexRow + indexSeat}
-                          className="bg-red-500 h-5 w-5 md:h-10 md:w-10 rounded-t-3xl flex justify-center items-center font-bold text-white hover:bg-red-800 cursor-pointer"
-                        >
-                          {seat === 1 ? "X" : ""}
-                        </div>
+                        <SeatItem
+                          setSelectedTickets={setSelectedTickets}
+                          seatState={getSeatState(
+                            indexRow + 1,
+                            indexSeat + 1,
+                            bookedTickets,
+                            selectedTickets
+                          )}
+                          row={indexRow + 1}
+                          number={indexSeat + 1}
+                        />
                       </div>
                     );
                   })}

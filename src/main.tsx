@@ -20,6 +20,7 @@ import AuthProvider from "@/components/auth/AuthProvider";
 import UserRoute from "@/components/auth/UserRoute";
 import AdminRoute from "@/components/auth/AdminRoute";
 import NotLoggedInRoute from "@/components/auth/NotLoggedInRoute";
+import Checkout from "@/components/pages/Checkout";
 
 const queryClient = new QueryClient();
 
@@ -75,11 +76,11 @@ createRoot(document.getElementById("root")!).render(
                 element={<UserRoute Component={UserProfile} />}
               ></Route>
 
-              {/* Stripe Page */}
-              {/* <Route
-                path="stripe-checkout"
-                element={<UserRoute Component={"stripe"} />}
-              ></Route> */}
+              {/* Checkout Page */}
+              <Route
+                path="checkout"
+                element={<UserRoute Component={Checkout} />}
+              ></Route>
 
               {/* Dashboard Route */}
               <Route path="dashboard">

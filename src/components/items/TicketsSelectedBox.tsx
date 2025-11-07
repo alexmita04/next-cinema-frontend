@@ -1,35 +1,70 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { type SelectedTicketsInterface } from "@/components/pages/SpecificScreening";
 
-const ticketsData = [
-  { seat: "A", row: "6" },
-  { seat: "B", row: "6" },
-];
+// const ticketsData = [
+//   { seat: "A", row: "6" },
+//   { seat: "B", row: "6" },
+// ];
 
-const TicketsSelectedBox = () => {
+interface TicketsSelectedBoxInterface {
+  handleRedirectToCheckout: () => void;
+  selectedTickets: SelectedTicketsInterface[];
+  setSelectedTickets: React.Dispatch<
+    React.SetStateAction<SelectedTicketsInterface[]>
+  >;
+}
+
+const TicketsSelectedBox = ({
+  handleRedirectToCheckout,
+  selectedTickets,
+  setSelectedTickets,
+}: TicketsSelectedBoxInterface) => {
+  const handleDelete = (row: number, number: number) => {
+    setSelectedTickets((tickets) => {
+      return tickets.filter((t) => {
+        return !(t.seatNumber === number && t.seatRow === row);
+      });
+    });
+  };
+
   return (
     <>
       <div className="border-3 border-black rounded-lg p-10">
         <p className="text-2xl font-medium mb-4">Tickets Selected</p>
         <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
-          {ticketsData.map((ticketEl) => {
+          {selectedTickets.map((ticketEl) => {
             return (
               <div
                 className="flex flex-col items-center border-2 border-black p-4 rounded-lg"
-                key={`${ticketEl.row}${ticketEl.seat}`}
+                key={`${ticketEl.seatRow}${ticketEl.seatNumber}`}
               >
                 <p className="text-sm md:text-lg">
-                  Ticket <span>{ticketEl.seat + ticketEl.row}</span>
+                  Ticket <span>{ticketEl.seatRow + ticketEl.seatNumber}</span>
                 </p>
-                <a href="#" className="text-red-500">
+                {/* <a href="#" className="text-red-500">
                   delete
-                </a>
+                </a> */}
+                <Button
+                  className="mt-2"
+                  size={"sm"}
+                  variant={"outline"}
+                  onClick={() => {
+                    handleDelete(ticketEl.seatRow, ticketEl.seatNumber);
+                  }}
+                >
+                  delete
+                </Button>
               </div>
             );
           })}
         </div>
-        <Button size="lg" className="px-10 py-7 text-lg font-bold">
-          <Link to={"#"}>Checkout</Link>
+        <Button
+          disabled={!selectedTickets.length}
+          onClick={handleRedirectToCheckout}
+          size="lg"
+          className="px-10 py-7 text-lg font-bold"
+        >
+          Checkout
         </Button>
       </div>
     </>

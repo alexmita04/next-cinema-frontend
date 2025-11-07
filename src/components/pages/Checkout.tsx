@@ -1,0 +1,11 @@
+import { useLocation } from "react-router";
+
+const Checkout = () => {
+  const location = useLocation();
+
+  console.log(location);
+
+  return <div>Checkout</div>;
+};
+
+export default Checkout;
