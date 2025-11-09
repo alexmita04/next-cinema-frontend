@@ -30,7 +30,9 @@ const TicketsSelectedBox = ({
   return (
     <>
       <div className="border-3 border-black rounded-lg p-10">
-        <p className="text-2xl font-medium mb-4">Tickets Selected</p>
+        <p className="text-2xl font-medium mb-1">Tickets Selected </p>
+        <p className="text-sm mb-4">(You can select maximum 2 tickets)</p>
+
         <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
           {selectedTickets.map((ticketEl) => {
             return (

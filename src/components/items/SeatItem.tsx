@@ -1,9 +1,12 @@
 import { type SelectedTicketsInterface } from "@/components/pages/SpecificScreening";
 
+const MAX_NUMBER_TICKETS = 2;
+
 interface SeatItemPropsInterface {
   setSelectedTickets: React.Dispatch<
     React.SetStateAction<SelectedTicketsInterface[]>
   >;
+  selectedTickets: SelectedTicketsInterface[];
   seatState: "booked" | "selected" | "notSelected";
   row: number;
   number: number;
@@ -11,11 +14,13 @@ interface SeatItemPropsInterface {
 
 const SeatItem = ({
   setSelectedTickets,
+  selectedTickets,
   seatState,
   row,
   number,
 }: SeatItemPropsInterface) => {
   const handleNotSelected = () => {
+    if (selectedTickets.length >= MAX_NUMBER_TICKETS) return;
     setSelectedTickets((selectedTickets) => {
       return [...selectedTickets, { seatRow: row, seatNumber: number }];
     });

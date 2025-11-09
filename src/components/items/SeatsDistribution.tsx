@@ -103,6 +103,7 @@ const SeatsDistribution = ({
                         )}
                         <SeatItem
                           setSelectedTickets={setSelectedTickets}
+                          selectedTickets={selectedTickets}
                           seatState={getSeatState(
                             indexRow + 1,
                             indexSeat + 1,
