@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { AxiosError } from "axios";
 import { AuthContext } from "@/components/auth/AuthContext";
-import ApiClient, { setToken, setTokenRefreshCallback } from "@/lib/apiClient";
+import ApiClient, {
+  setToken,
+  setTokenRefreshCallback,
+  setUserIdCallback,
+} from "@/lib/apiClient";
 
 interface LoginCredentials {
   username: string;
@@ -31,6 +35,7 @@ export interface AuthContextInterface {
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>;
   userId: string | null;
+  setUserId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const AuthProvider = ({ children }: { children: React.ReactElement }) => {
@@ -44,13 +49,19 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     setAccessToken(newToken);
   }, []);
 
+  const handleUserId = useCallback((id: string | null) => {
+    setUserId(id);
+  }, []);
+
   useEffect(() => {
     setTokenRefreshCallback(handleTokenRefresh);
+    setUserIdCallback(handleUserId);
 
     return () => {
       setTokenRefreshCallback(null);
+      setUserIdCallback(null);
     };
-  }, [handleTokenRefresh]);
+  }, [handleTokenRefresh, handleUserId]);
 
   useEffect(() => {
     setToken(accessToken);
@@ -87,10 +98,11 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
         ...credentials,
         dateOfBirth: new Date(),
       });
-      const { accessToken, _id } = response.data.data;
+      const { accessToken } = response.data.data;
+      const { id } = response.data.data.user;
       setAccessToken(accessToken);
       setIsAdmin(response.data.data.isAdmin);
-      setUserId(_id);
+      setUserId(id);
 
       return true;
     } catch (err) {
@@ -139,6 +151,7 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     setIsAdmin,
     setAccessToken,
     userId,
+    setUserId,
   };
 
   return (

@@ -12,6 +12,7 @@ export const AuthContext = createContext<AuthContextInterface>({
   setIsAdmin: () => {},
   setAccessToken: () => {},
   userId: null,
+  setUserId: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);

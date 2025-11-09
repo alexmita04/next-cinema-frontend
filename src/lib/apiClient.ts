@@ -5,6 +5,7 @@ const ApiClient = axios.create({
   withCredentials: true,
 });
 
+// Access Token
 let currentToken: string | null = null;
 let tokenRefreshCallback: ((token: string | null) => void) | null = null;
 
@@ -16,6 +17,20 @@ export const setTokenRefreshCallback = (
   callback: ((token: string | null) => void) | null
 ) => {
   tokenRefreshCallback = callback;
+};
+
+// UserId
+// let currentUserId: string | null = null;
+let userIdCallback: ((userId: string | null) => void) | null = null;
+
+// export const setUserIdApiClient = (userId: string | null) => {
+//   currentUserId = userId;
+// };
+
+export const setUserIdCallback = (
+  callback: ((userId: string | null) => void) | null
+) => {
+  userIdCallback = callback;
 };
 
 ApiClient.interceptors.request.use(
@@ -48,10 +63,13 @@ ApiClient.interceptors.response.use(
         const response = await ApiClient.post("/users/refresh");
 
         const newAccessToken = response.data.accessToken;
+        const userId = response.data.data.id;
 
         setToken(newAccessToken);
+        // setUserIdApiClient(userId);
 
         if (tokenRefreshCallback) tokenRefreshCallback(newAccessToken);
+        if (userIdCallback) userIdCallback(userId);
 
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
 

@@ -1,11 +1,22 @@
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import StripeCheckout from "@/components/items/StripeCheckout";
 
 const Checkout = () => {
+  let canLoadStripe: boolean = false;
   const location = useLocation();
+  const navigate = useNavigate();
 
-  console.log(location);
+  if (location.state.tickets) {
+    canLoadStripe = true;
+  }
 
-  return <div>Checkout</div>;
+  if (!canLoadStripe) {
+    navigate("/cinemas");
+  }
+
+  return (
+    <>{canLoadStripe && <StripeCheckout tickets={location.state.tickets} />}</>
+  );
 };
 
 export default Checkout;
