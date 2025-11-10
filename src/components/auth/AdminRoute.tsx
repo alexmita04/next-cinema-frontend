@@ -8,7 +8,8 @@ interface AdminRouteInterface {
 }
 
 const AdminRoute = ({ Component }: AdminRouteInterface) => {
-  const { isAuthenticated, isAdmin, setIsAdmin, setAccessToken } = useAuth();
+  const { isAuthenticated, isAdmin, setIsAdmin, setAccessToken, setUserId } =
+    useAuth();
   const [okToRender, setOkToRender] = useState<boolean>(false);
   const [isPossibleAdmin, setIsPossibleAdmin] = useState<boolean>(true);
 
@@ -21,6 +22,7 @@ const AdminRoute = ({ Component }: AdminRouteInterface) => {
 
         if (response.data.data.accessToken) {
           setAccessToken(response.data.data.accessToken);
+          setUserId(response.data.data.id);
           setIsAdmin(true);
           setIsPossibleAdmin(false);
         }
@@ -54,6 +56,7 @@ const AdminRoute = ({ Component }: AdminRouteInterface) => {
     isPossibleAdmin,
     setAccessToken,
     setIsAdmin,
+    setUserId,
   ]);
 
   return <>{okToRender && <Component />}</>;

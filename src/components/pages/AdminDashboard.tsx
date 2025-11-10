@@ -1,13 +1,20 @@
+import { useState, useEffect } from "react";
 import ChartAdmin from "@/components/items/ChartAdmin";
 import TicketsTable from "@/components/items/TicketsTable";
 import DatePicker from "@/components/items/DatePicker";
 import { type ColumnDef } from "@tanstack/react-table";
-import movies from "@/components/items/moviesData.json";
-import screening from "@/components/items/screening.json";
 import MovieItem from "@/components/items/MovieItem";
 import AdminScreeningCard from "@/components/items/AdminScreeningCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import {
+  type CinemaInterface,
+  type ScreeningInterface,
+  type TicketInterface,
+  type MovieInterface,
+} from "@/lib/backendTypes";
+import CustomSpinner from "@/components/items/CustomSpinner";
+import ApiClient from "@/lib/apiClient";
 
 function formatDate(dateObj: Date): string {
   const year = dateObj.getFullYear();
@@ -26,109 +33,6 @@ interface Ticket {
   movie: string;
   totalPrice: number;
 }
-
-const tickets: Ticket[] = [
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving Private Ryan",
-    totalPrice: 20,
-  },
-  {
-    screeningId: "68ef7d1a5c123b456e7f8d90",
-    movie: "Saving test Ryan",
-    totalPrice: 20,
-  },
-];
 
 const columns: ColumnDef<Ticket>[] = [
   {
@@ -155,74 +59,183 @@ const columns: ColumnDef<Ticket>[] = [
   },
 ];
 
-const cinema = {
-  _id: "68ecf08c52e10981ea3f2d11",
-  name: "CityPlex Downtown",
-  location: "Main Street 123, Downtown, NY",
-  auditoriums: [
-    { name: "A", capacity: 200, screenType: "4DX" },
-    { name: "B", capacity: 180, screenType: "Standard" },
-    { name: "C", capacity: 180, screenType: "Standard" },
-  ],
-  openingHour: 10,
-  closingHour: 24,
-  email: "contact@cityplexdowntown.com",
-  parking: false,
-  admin: "68ecf08f52e10981ea3f2d9c",
-  createdAt: "2025-10-14T10:00:00.000Z",
-  updatedAt: "2025-10-14T18:30:00.000Z",
-  __v: 0,
+interface TableTicketInterace {
+  screeningId: string;
+  movie: string;
+  totalPrice: number;
+  createdAt: Date;
+}
+
+const countTickets = (tickets: TableTicketInterace[], date: Date) => {
+  let ticketCounter = 0;
+
+  const startOfDay = new Date(date);
+  startOfDay.setHours(0, 0, 0, 0);
+
+  const startOfNextDay = new Date(date);
+  startOfNextDay.setDate(startOfDay.getDate() + 1);
+
+  for (const ticket of tickets) {
+    const ticketDate = new Date(ticket.createdAt);
+
+    if (ticketDate >= startOfDay && ticketDate < startOfNextDay)
+      ticketCounter++;
+  }
+  return ticketCounter;
 };
 
-const screenings = Array(5).fill(screening);
-
 const AdminDashboard = () => {
+  const [cinema, setCinema] = useState<null | CinemaInterface>(null);
+  const [screenings, setScreenings] = useState<null | ScreeningInterface[]>(
+    null
+  );
+  const [tickets, setTickets] = useState<null | TableTicketInterace[]>(null);
+  const [movies, setMovies] = useState<null | MovieInterface[]>(null);
+  const [date, setDate] = useState<Date | undefined>(new Date(Date.now()));
+
+  console.log(date);
+
+  // fetch cinema information
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchCinema = async () => {
+      const response = await ApiClient.get("/users/reports/sales");
+
+      if (isMounted) {
+        //cinema
+        setCinema(response.data.data.cinema);
+
+        //screenings
+        if (response.data.data.screenings) {
+          setScreenings(response.data.data.screenings);
+        } else {
+          setScreenings(null);
+        }
+
+        //tickets
+        if (response.data.data.allTickets) {
+          const tableTickets = response.data.data.allTickets.map(
+            (t: TicketInterface & { movie: string; createdAt: Date }) => {
+              return {
+                screeningId: t.screening,
+                movie: t.movie,
+                totalPrice: t.totalPrice,
+                createdAt: t.createdAt,
+              };
+            }
+          );
+          setTickets(tableTickets);
+        } else {
+          setTickets(null);
+        }
+      }
+    };
+
+    fetchCinema();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // fetch movies information
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchMovies = async () => {
+      const response = await ApiClient.get("/movies");
+
+      if (isMounted) {
+        setMovies(response.data.data.movies);
+      }
+    };
+
+    fetchMovies();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Chart and calendar
   const today = new Date();
 
   const chartData: { date: string; tickets: number }[] = [];
 
   for (let day = -chartRange.before; day <= 0; day++) {
-    const targetDate = new Date(today);
+    if (date && tickets) {
+      const targetDate = new Date(date);
 
-    targetDate.setDate(today.getDate() + day);
+      targetDate.setDate(date.getDate() + day);
 
-    const formatedDate = formatDate(targetDate);
+      const formatedDate = formatDate(targetDate);
 
-    chartData.push({
-      date: formatedDate,
-      tickets: Math.floor(Math.random() * 5),
-    });
+      chartData.push({
+        date: formatedDate,
+        tickets: countTickets(tickets, targetDate),
+      });
+    } else {
+      const targetDate = new Date(today);
+
+      targetDate.setDate(today.getDate() + day);
+
+      const formatedDate = formatDate(targetDate);
+
+      chartData.push({
+        date: formatedDate,
+        tickets: 0,
+      });
+    }
   }
+
+  const onDateChange = (date: Date | undefined) => {
+    setDate(date);
+  };
 
   return (
     <>
       <h1 className="text-5xl mt-20 mb-10 font-bold">Admin Dashboard</h1>
       <div className="mb-10">
-        <DatePicker />
+        <DatePicker value={date} onChange={onDateChange} />
       </div>
       <div className="mb-10">
         {" "}
         <ChartAdmin chartData={chartData} />
       </div>
       <div className="mb-10">
-        <TicketsTable columns={columns} data={tickets} />
+        {!tickets ? (
+          <CustomSpinner size={4} />
+        ) : (
+          <>
+            <TicketsTable columns={columns} data={tickets} />
+          </>
+        )}
       </div>
       <div className="mb-10">
         <h2 className="text-5xl font-bold mb-5">Cinema Information</h2>
-        <p className="text-xl p-2 border-b-2">{cinema.name}</p>
-        <p className="text-xl p-2 border-b-2">Location: {cinema.location}</p>
-        <p className="text-xl p-2 border-b-2">
-          Program: {cinema.openingHour} - {cinema.closingHour}
-        </p>
-        <p className="text-xl p-2 border-b-2">Email: {cinema.email}</p>
-        <p className="text-xl p-2 border-b-2">
-          Parking: {cinema.parking ? "yes" : "no"}
-        </p>
+        {!cinema ? (
+          <CustomSpinner size={4} />
+        ) : (
+          <>
+            <p className="text-xl p-2 border-b-2">{cinema.name}</p>
+            <p className="text-xl p-2 border-b-2">
+              Location: {cinema.location}
+            </p>
+            <p className="text-xl p-2 border-b-2">
+              Program: {cinema.openingHour} - {cinema.closingHour}
+            </p>
+            <p className="text-xl p-2 border-b-2">Email: {cinema.email}</p>
+            <p className="text-xl p-2 border-b-2">
+              Parking: {cinema.parking ? "yes" : "no"}
+            </p>
+          </>
+        )}
       </div>
       <div className="mb-10">
         <h2 className="text-5xl font-bold mb-5">Your Screenings</h2>
         <div className="flex flex-col gap-5">
-          {screenings.map((screeningEl, index) => {
+          {screenings?.map((screeningEl, index) => {
             return (
               <AdminScreeningCard
                 key={screeningEl._id + index}
@@ -238,17 +251,23 @@ const AdminDashboard = () => {
       </div>
       <div>
         <h2 className="text-5xl font-bold mb-5">Movies</h2>
-        <div className="grid sm:grid-cols-2 xl:grid-cols-6 md:grid-cols-3 gap-5 mb-10">
-          {movies.map((movielEl, index) => {
-            return (
-              <MovieItem
-                key={index}
-                title={movielEl.title}
-                coverImage={movielEl.coverImage}
-              />
-            );
-          })}
-        </div>
+        {!movies ? (
+          <CustomSpinner size={4} />
+        ) : (
+          <>
+            <div className="grid sm:grid-cols-2 xl:grid-cols-6 md:grid-cols-3 gap-5 mb-10">
+              {movies.map((movielEl, index) => {
+                return (
+                  <MovieItem
+                    title={movielEl.title}
+                    key={index}
+                    coverImage={movielEl.coverImage}
+                  />
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
     </>
   );
