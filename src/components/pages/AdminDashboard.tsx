@@ -234,20 +234,28 @@ const AdminDashboard = () => {
       </div>
       <div className="mb-10">
         <h2 className="text-5xl font-bold mb-5">Your Screenings</h2>
-        <div className="flex flex-col gap-5">
-          {screenings?.map((screeningEl, index) => {
-            return (
-              <AdminScreeningCard
-                key={screeningEl._id + index}
-                movieTitle={screeningEl.movie.title}
-                screeningId={screeningEl._id}
-              />
-            );
-          })}
-        </div>
-        <Button size="lg" className="mt-5 mb-5 text-xl px-10 py-7">
-          <Link to={`/dashboard/screenings/add-screening`}>Add Screening</Link>
-        </Button>
+        {!screenings ? (
+          <CustomSpinner size={4} />
+        ) : (
+          <>
+            <div className="flex flex-col gap-5">
+              {screenings?.map((screeningEl, index) => {
+                return (
+                  <AdminScreeningCard
+                    key={screeningEl._id + index}
+                    movieTitle={screeningEl.movie.title}
+                    screeningId={screeningEl._id}
+                  />
+                );
+              })}
+            </div>
+            <Button size="lg" className="mt-5 mb-5 text-xl px-10 py-7">
+              <Link to={`/dashboard/screenings/add-screening`}>
+                Add Screening
+              </Link>
+            </Button>
+          </>
+        )}
       </div>
       <div>
         <h2 className="text-5xl font-bold mb-5">Movies</h2>
