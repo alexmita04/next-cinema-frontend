@@ -15,6 +15,7 @@ import {
   type MovieInterface,
   type AuditoriumInterface,
   type CinemaInterface,
+  isApiError,
 } from "@/lib/backendTypes";
 import AlertEl from "@/components/items/AlertEl";
 
@@ -103,9 +104,9 @@ const fetchCinema = async () => {
 const convertDate = (date: Date) => {
   const localDate = new Date(date);
 
-  const year = localDate.getUTCFullYear();
-  const month = localDate.getUTCMonth() + 1;
-  const day = localDate.getUTCDate();
+  const year = localDate.getFullYear();
+  const month = localDate.getMonth() + 1;
+  const day = localDate.getDate();
 
   const pad = (num: number) => String(num).padStart(2, "0");
 
@@ -113,30 +114,6 @@ const convertDate = (date: Date) => {
 
   return formattedDate;
 };
-
-interface ApiError {
-  response: {
-    data: {
-      message: string;
-    };
-    // Alte proprietăți axios: status, headers, config, etc.
-  };
-}
-
-function isApiError(err: unknown): err is ApiError {
-  return (
-    typeof err === "object" &&
-    err !== null &&
-    "response" in err &&
-    typeof (err as ApiError).response === "object" &&
-    (err as ApiError).response !== null &&
-    "data" in (err as ApiError).response &&
-    typeof (err as ApiError).response.data === "object" &&
-    (err as ApiError).response.data !== null &&
-    "message" in (err as ApiError).response.data &&
-    typeof (err as ApiError).response.data.message === "string"
-  );
-}
 
 const createScreening = async (postData: {
   screening: {

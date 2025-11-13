@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import {
   type CinemaInterface,
-  type ScreeningInterface,
   type TicketInterface,
   type MovieInterface,
 } from "@/lib/backendTypes";
@@ -84,16 +83,30 @@ const countTickets = (tickets: TableTicketInterace[], date: Date) => {
   return ticketCounter;
 };
 
+export interface FetchedScreeningInterface {
+  _id: string;
+  auditorium: string;
+  cinema: string;
+  createdAt: Date;
+  createdBy: string;
+  date: Date;
+  language: string;
+  movie: MovieInterface;
+  pricing: number;
+  startTime: number;
+  updatedAt: string;
+}
+
 const AdminDashboard = () => {
   const [cinema, setCinema] = useState<null | CinemaInterface>(null);
-  const [screenings, setScreenings] = useState<null | ScreeningInterface[]>(
-    null
-  );
+  const [screenings, setScreenings] = useState<
+    null | FetchedScreeningInterface[]
+  >(null);
   const [tickets, setTickets] = useState<null | TableTicketInterace[]>(null);
   const [movies, setMovies] = useState<null | MovieInterface[]>(null);
   const [date, setDate] = useState<Date | undefined>(new Date(Date.now()));
 
-  console.log(date);
+  console.log(screenings);
 
   // fetch cinema information
   useEffect(() => {
@@ -234,7 +247,7 @@ const AdminDashboard = () => {
       </div>
       <div className="mb-10">
         <h2 className="text-5xl font-bold mb-5">Your Screenings</h2>
-        {!screenings ? (
+        {!screenings || !cinema ? (
           <CustomSpinner size={4} />
         ) : (
           <>
@@ -245,6 +258,9 @@ const AdminDashboard = () => {
                     key={screeningEl._id + index}
                     movieTitle={screeningEl.movie.title}
                     screeningId={screeningEl._id}
+                    auditoriumId={screeningEl.auditorium}
+                    cinemaId={cinema._id}
+                    setScreenings={setScreenings}
                   />
                 );
               })}

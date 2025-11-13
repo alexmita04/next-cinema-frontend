@@ -75,3 +75,27 @@ export interface TicketInterface {
   totalPrice: number;
   pricingCategory: "standard" | "student";
 }
+
+export interface ApiError {
+  response: {
+    data: {
+      message: string;
+    };
+    // Alte proprietăți axios: status, headers, config, etc.
+  };
+}
+
+export function isApiError(err: unknown): err is ApiError {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "response" in err &&
+    typeof (err as ApiError).response === "object" &&
+    (err as ApiError).response !== null &&
+    "data" in (err as ApiError).response &&
+    typeof (err as ApiError).response.data === "object" &&
+    (err as ApiError).response.data !== null &&
+    "message" in (err as ApiError).response.data &&
+    typeof (err as ApiError).response.data.message === "string"
+  );
+}
