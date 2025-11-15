@@ -23,7 +23,11 @@ const AdminRoute = ({ Component }: AdminRouteInterface) => {
         if (response.data.data.accessToken) {
           setAccessToken(response.data.data.accessToken);
           setUserId(response.data.data.id);
-          setIsAdmin(true);
+          if (response.data.data.isAdmin) {
+            setIsAdmin(true);
+          } else {
+            setIsAdmin(false);
+          }
           setIsPossibleAdmin(false);
         }
       } catch (err) {

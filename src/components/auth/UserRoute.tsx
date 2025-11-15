@@ -8,7 +8,8 @@ interface UserRouteInterface {
 }
 
 const UserRoute = ({ Component }: UserRouteInterface) => {
-  const { isAuthenticated, isAdmin, setAccessToken, setUserId } = useAuth();
+  const { isAuthenticated, isAdmin, setAccessToken, setUserId, setIsAdmin } =
+    useAuth();
   const [okToRender, setOkToRender] = useState<boolean>(false);
   const [isPossibleUser, setIsPossibleUser] = useState<boolean>(true);
 
@@ -22,6 +23,11 @@ const UserRoute = ({ Component }: UserRouteInterface) => {
         if (response.data.data.accessToken) {
           setAccessToken(response.data.data.accessToken);
           setUserId(response.data.data.id);
+          if (response.data.data.isAdmin) {
+            setIsAdmin(true);
+          } else {
+            setIsAdmin(false);
+          }
           setIsPossibleUser(false);
         }
       } catch (err) {
@@ -54,6 +60,7 @@ const UserRoute = ({ Component }: UserRouteInterface) => {
     isPossibleUser,
     setAccessToken,
     setUserId,
+    setIsAdmin,
   ]);
 
   return <>{okToRender && <Component />}</>;
