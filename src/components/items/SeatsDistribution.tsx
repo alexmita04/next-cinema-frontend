@@ -24,7 +24,6 @@ const checkIfSeatIsBooked = (
 ): boolean => {
   if (bookedTickets) {
     for (const bookedTicket of bookedTickets) {
-      console.log(rowIndex);
       if (
         bookedTicket.seatRow === rowIndex &&
         bookedTicket.seatNumber === numberIndex

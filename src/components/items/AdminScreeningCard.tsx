@@ -69,7 +69,9 @@ const AdminScreeningCard = ({
         </p>
         <div className="flex gap-1 md:gap-5">
           <Button variant="outline">
-            <Link to={`/dashboard/screenings/edit-screening/${screeningId}`}>
+            <Link
+              to={`/dashboard/screenings/${screeningId}/cinemas/${cinemaId}/auditoriums/${auditoriumId}/edit-screening`}
+            >
               Edit
             </Link>
           </Button>

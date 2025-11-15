@@ -106,8 +106,6 @@ const AdminDashboard = () => {
   const [movies, setMovies] = useState<null | MovieInterface[]>(null);
   const [date, setDate] = useState<Date | undefined>(new Date(Date.now()));
 
-  console.log(screenings);
-
   // fetch cinema information
   useEffect(() => {
     let isMounted = true;

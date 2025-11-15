@@ -94,7 +94,7 @@ createRoot(document.getElementById("root")!).render(
                     element={<AdminRoute Component={AddScreening} />}
                   ></Route>
                   <Route
-                    path="edit-screening/:screeningId"
+                    path=":screeningId/cinemas/:cinemaId/auditoriums/:auditoriumId/edit-screening"
                     element={<AdminRoute Component={EditScreening} />}
                   ></Route>
                 </Route>
