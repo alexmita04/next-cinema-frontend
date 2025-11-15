@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 const NotFound = () => {
   return (
@@ -12,7 +13,7 @@ const NotFound = () => {
           size="lg"
           className="xl:text-2xl xl:px-[40px] xl:py-[30px]"
         >
-          <a href="#">Landing Page</a>
+          <Link to="/cinemas">Grab a ticket</Link>
         </Button>
       </div>
     </>
