@@ -125,6 +125,7 @@ const SpecificCinema = () => {
         }
       } catch (err) {
         console.log(err);
+        setScreenings(null);
         if (isMounted) setScreenings(null);
       }
     };
@@ -152,7 +153,8 @@ const SpecificCinema = () => {
               <DatePicker value={date} onChange={datePickerHandler} />
             </div>
             <h2 className="text-3xl mb-5">Screenings</h2>
-            {screenings?.length === 0 && <div>0 screenings on this date</div>}
+            {screenings?.length === 0 ||
+              (!screenings && <div>0 screenings on this date</div>)}
             <div className="flex flex-col gap-5">
               {screenings === null ? (
                 <CustomSpinner size={4} />
