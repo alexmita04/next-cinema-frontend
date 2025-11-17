@@ -11,6 +11,9 @@ A concise frontend interface built with React and TypeScript. The app uses this 
 This app is an interface for two types of users:
 
 - Admins (create/edit/delete screenings, preview cinema dashboard, see sold tickets)
+  - Admin credentials:
+    - Username: NextCinemaRetro-admin
+    - Password: adminpass1234
 - Normal Users (buy tickets)
 
 **_There havent been any LLMs used for writing code in this project_**
