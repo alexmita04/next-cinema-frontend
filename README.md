@@ -1,73 +1,75 @@
-# React + TypeScript + Vite
+# Next Cinema Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A concise frontend interface built with React and TypeScript. The app uses this [backend](https://github.com/alexmita04/next-cinema-api).
 
-Currently, two official plugins are available:
+- The routing is done via **React Router**.
+- The forms are handled via **React Hook Form and Zod**
+- The asynchronous state management and fetching are handled via **react query and axios**
+- The payment processing is handled via **Stripe**
+- Design is built with **Tailwind and Shadcn**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This app is an interface for two types of users:
 
-## React Compiler
+- Admins (create/edit/delete screenings, preview cinema dashboard, see sold tickets)
+- Normal Users (buy tickets)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**_There havent been any LLMs used for writing code in this project_**
 
-## Expanding the ESLint configuration
+## Important Functionalities
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- The entire routing logic resides in main.js (react router)
+- For navigation purposes, I've used Link and useNavigation (react router)
+- There is a global axios client configured for the API
+- I've used axios response interceptors for handling expired access token (jwt).
+- I've used axios request interceptors for attaching accessToken (jwt) on every request.
+- For authentication the app uses JWT. Access token is being stored in react state and the refresh token in an HTTP-only cookie
+- For authorization purposes, the app uses two components wrappers (AdminRoute, UserRoute)
+- For fetching I've used useQuery and for mutations I've used useMutation (react query)
+- Forms are being handled by react hook form and the validation side is made possible with zod
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Dedicated Client Side
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- This service powers the application's user interface. For the server-side implementation, please see the [**Backend Repository**](https://github.com/alexmita04/next-cinema-api)
+- [**The Client Side is live!**](https://next-cinema-frontend.onrender.com)
+  - Please note that as it's hosted on a free tier (backend + frontend), there may be a brief delay while the server wakes up on your first request:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# Table of Contents
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- [Tech Stack](#tech-stack)
+- [Installation and Local Configuration](#installation-and-local-configuration)
+- [Contact](#contact)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tech Stack
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Core Technologies
+
+- React
+- TypeScript
+- Vite
+
+### Dependencies
+
+- React Hook Form
+- React Stripe
+- Stripe.js
+- Tailwindcss + Shadcn
+- Axios
+- React Query
+- Zod
+
+## Installation and Local Configuration
+
+### Clone This Repo
+
+1. Clone the repository
+2. Run `npm install`
+3. Run `npm run dev`
+
+## Contact
+
+- **Email:** alexmita04@gmail.com
+- [**LinkedIn:**](https://www.linkedin.com/in/alexandru-mita-ba74b2299/)
+
+## License
+
+See [LICENSE](LICENSE.md)
