@@ -4,15 +4,6 @@ import { useEffect, useState } from "react";
 import { type UserInterface, type TicketInterface } from "@/lib/backendTypes";
 import CustomSpinner from "@/components/items/CustomSpinner";
 
-const userData = {
-  username: "alexmita04",
-  dateOfBirth: "2004-06-12",
-  gender: "Male",
-  phoneNumber: "123456789",
-  address: "1234 Main Street Los Angeles, CA 90012",
-  isAdmin: false,
-};
-
 const UserProfile = () => {
   const [user, setUser] = useState<null | UserInterface>(null);
   const [tickets, setTickets] = useState<null | TicketInterface[]>(null);
@@ -78,24 +69,24 @@ const UserProfile = () => {
         ) : (
           <>
             <p className="pb-2 border-b-2 mb-5">
-              <span className="font-bold">Username:</span> {userData.username}
+              <span className="font-bold">Username:</span> {user.username}
             </p>
             <p className="pb-2 border-b-2 mb-5">
               <span className="font-bold">Date of Birth:</span>{" "}
-              {userData.dateOfBirth}
+              {user.dateOfBirth}
             </p>
             <p className="pb-2 border-b-2 mb-5">
               {" "}
-              <span className="font-bold">Gender:</span> {userData.gender}
+              <span className="font-bold">Gender:</span> {user.gender}
             </p>
             <p className="pb-2 border-b-2 mb-5">
               {" "}
               <span className="font-bold">Phone Number:</span>{" "}
-              {userData.phoneNumber}
+              {user.phoneNumber}
             </p>
             <p className="pb-2 border-b-2">
               {" "}
-              <span className="font-bold">Address:</span> {userData.address}
+              <span className="font-bold">Address:</span> {user.address}
             </p>
           </>
         )}
