@@ -17,6 +17,7 @@ This app is an interface for two types of users:
     - Username: NextCinemaRetro-admin
     - Password: adminpass1234
 - Normal Users (buy tickets)
+  - Card number: 4242 4242 4242 4242
 
 **_There havent been any LLMs used for writing code in this project_**
 
