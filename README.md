@@ -4,6 +4,8 @@ A concise frontend interface built with React and TypeScript. The app uses this 
 
 [**The Client Side is live!**](https://next-cinema-frontend.onrender.com)
 
+[**Figma Wireframe Link**](https://www.figma.com/design/AjZuGSZPGPVQPqBC9BFiUU/Next-Cinema-Wireframe?node-id=0-1&t=hGYVnyOsU9PbvjCX-1)
+
 - The routing is done via **React Router**.
 - The forms are handled via **React Hook Form and Zod**
 - The asynchronous state management and fetching are handled via **react query and axios**
