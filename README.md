@@ -7,10 +7,10 @@ A concise frontend interface built with React and TypeScript. The app uses this 
 [**Figma Wireframe Link**](https://www.figma.com/design/AjZuGSZPGPVQPqBC9BFiUU/Next-Cinema-Wireframe?node-id=0-1&t=hGYVnyOsU9PbvjCX-1)
 
 - The routing is done via **React Router**.
-- The forms are handled via **React Hook Form and Zod**
-- The asynchronous state management and fetching are handled via **react query and axios**
-- The payment processing is handled via **Stripe**
-- Design is built with **Tailwind and Shadcn**
+- The forms are handled via **React Hook Form and Zod**.
+- The asynchronous state management and fetching are handled via **react query and axios**.
+- The payment processing is handled via **Stripe**.
+- Design is built with **Tailwind and Shadcn**.
 
 This app is an interface for two types of users:
 
@@ -21,25 +21,25 @@ This app is an interface for two types of users:
 - Normal Users (buy tickets)
   - Card number: 4242 4242 4242 4242
 
-**_There havent been any LLMs used for writing code in this project_**
+**_There havent been any LLMs used for writing code in this project_**.
 
 ## Important Functionalities
 
-- The entire routing logic resides in main.js (react router)
-- For navigation purposes, I've used Link and useNavigation (react router)
-- There is a global axios client configured for the API
+- The entire routing logic resides in main.js (react router).
+- For navigation purposes, I've used Link and useNavigation (react router).
+- There is a global axios client configured for the API.
 - I've used axios response interceptors for handling expired access token (jwt).
 - I've used axios request interceptors for attaching accessToken (jwt) on every request.
-- For authentication the app uses JWT. Access token is being stored in react state and the refresh token in an HTTP-only cookie
-- For authorization purposes, the app uses two components wrappers (AdminRoute, UserRoute)
-- For fetching I've used useQuery and for mutations I've used useMutation (react query)
-- Forms are being handled by react hook form and the validation side is made possible with zod
+- For authentication the app uses JWT. Access token is being stored in react state and the refresh token in an HTTP-only cookie.
+- For authorization purposes, the app uses two components wrappers (AdminRoute, UserRoute).
+- For fetching I've used useQuery and for mutations I've used useMutation (react query).
+- Forms are being handled by react hook form and the validation side is made possible with zod.
 
 ## Dedicated Client Side
 
-- This service powers the application's user interface. For the server-side implementation, please see the [**Backend Repository**](https://github.com/alexmita04/next-cinema-api)
+- This service powers the application's user interface. For the server-side implementation, please see the [**Backend Repository**](https://github.com/alexmita04/next-cinema-api).
 - [**The Client Side is live!**](https://next-cinema-frontend.onrender.com)
-  - Please note that as it's hosted on a free tier (backend + frontend), there may be a brief delay while the server wakes up on your first request:
+  - Please note that as it's hosted on a free tier (backend + frontend), there may be a brief delay while the server wakes up on your first request
 
 # Table of Contents
 
